@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/vie_bg.xml" value="0.246" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/layout/login_tab_fragment.xml" value="0.27533264160156257" />
+        <entry key="app/src/main/res/layout/registration_tab_fragment.xml" value="0.2128623188405797" />
         <entry key="app/src/main/res/layout/signup_tab_fragment.xml" value="0.2635833740234375" />
       </map>
     </option>
