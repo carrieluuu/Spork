@@ -1,5 +1,6 @@
 package com.example.spork.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,10 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.spork.MainActivity;
 import com.example.spork.R;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class LoginTabFragment extends Fragment {
@@ -76,7 +81,7 @@ public class LoginTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i(TAG,"onClick login button");
-                String username = tvUsername.getText().toString();
+                String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 loginUser(username, password);
             }
@@ -90,21 +95,19 @@ public class LoginTabFragment extends Fragment {
             public void done(ParseUser user, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with login", e);
-                    Toast.makeText(LoginActivity.this, "Incorrect credentials", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Incorrect credentials", Toast.LENGTH_LONG).show();
                     return;
                 }
                 goMainActivity();
-                Toast.makeText(LoginActivity.this, "Login success!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Login success!", Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
     private void goMainActivity() {
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(getContext(), MainActivity.class);
         startActivity(i);
-        finish();
     }
 }
 
-}

@@ -15,7 +15,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private FloatingActionButton facebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
-        facebook = findViewById(R.id.fab_facebook);
 
         tabLayout.addTab(tabLayout.newTab().setText("Login"));
         tabLayout.addTab(tabLayout.newTab().setText("Register"));
@@ -35,13 +33,11 @@ public class LoginActivity extends AppCompatActivity {
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        facebook.setTranslationY(300);
+        tabLayout.setTranslationY(300);
 
         // opacity for animation
-        facebook.setAlpha(v);
         tabLayout.setAlpha(v);
 
-        facebook.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
         tabLayout.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
 
     }
