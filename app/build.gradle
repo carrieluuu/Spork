@@ -39,4 +39,11 @@ dependencies {
     // parse
     implementation 'com.github.parse-community.Parse-SDK-Android:parse:4.0.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2' // for logging API calls to LogCat
+
+    // lottie animations for splash screen
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+    // liquid swipe library from github
+    implementation 'com.github.Chrisvin:LiquidSwipe:1.3'
+
 }
