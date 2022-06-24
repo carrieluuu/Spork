@@ -11,11 +11,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.spork.R;
 
-public class OnboardingFragment1 extends Fragment {
+public class OnboardingFragment3 extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_onboarding1, container, false);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_onboarding3, container, false);
 
         return root;
     }

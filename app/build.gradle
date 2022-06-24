@@ -43,7 +43,7 @@ dependencies {
     // lottie animations for splash screen
     implementation 'com.airbnb.android:lottie:5.2.0'
 
-    // liquid swipe library from github
+    // liquid swipe github library
     implementation 'com.github.Chrisvin:LiquidSwipe:1.3'
 
 }
