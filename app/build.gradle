@@ -39,4 +39,7 @@ dependencies {
     // parse
     implementation 'com.github.parse-community.Parse-SDK-Android:parse:4.0.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2' // for logging API calls to LogCat
+
+    // facebook login sdk
+    implementation 'com.facebook.android:facebook-login:latest.release'
 }
