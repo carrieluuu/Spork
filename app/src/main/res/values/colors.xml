@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="blue_300">#DDE9FF</color>
     <color name="blue_500">#A5C5FF</color>
     <color name="blue_700">#4477DD</color>
+    <color name="yellow_300">#FDF0B9</color>
+    <color name="yellow_500">#FBBD00</color>
+    <color name="orange_700">#E06738</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
