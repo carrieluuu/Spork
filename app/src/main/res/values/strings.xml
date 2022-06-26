@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Spork</string>
+    <string name="facebook_app_id">551082753359276</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">5d50ed4a0d3465f38d9c0b221aa4d84b</string>
 </resources>

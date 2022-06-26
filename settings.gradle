@@ -10,6 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // Add the JitPack library
+        maven { url "https://jitpack.io" }
     }
 }
 rootProject.name = "Spork"
