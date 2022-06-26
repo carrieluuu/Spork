@@ -101,5 +101,12 @@ public class LoginActivity extends AppCompatActivity {
     private void goMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+
+        tabLayout.animate()
+                .translationY(0)
+                .alpha(1)
+                .setDuration(1000)
+                .setStartDelay(400)
+                .start();
     }
 }

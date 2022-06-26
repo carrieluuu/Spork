@@ -58,12 +58,12 @@ public class LoginTabFragment extends Fragment {
         tvForgetPassword.setAlpha(v);
         btnLogin.setAlpha(v);
 
-        tvUsername.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        etUsername.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        tvPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        etPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        tvForgetPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        btnLogin.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
+        displayAnimation(tvUsername);
+        displayAnimation(etUsername);
+        displayAnimation(tvPassword);
+        displayAnimation(etPassword);
+        displayAnimation(tvForgetPassword);
+        displayAnimation(btnLogin);
 
         // if user is already logged in, go to main activity
         if (ParseUser.getCurrentUser() != null) {
@@ -74,6 +74,10 @@ public class LoginTabFragment extends Fragment {
 
 
         return root;
+    }
+
+    public void displayAnimation(View v) {
+        v.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
     }
 
     private void loginButton() {
