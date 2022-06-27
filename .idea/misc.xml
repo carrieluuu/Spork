@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/button_bg.xml" value="0.244" />
+        <entry key="app/src/main/res/drawable/divider.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/edit_text_bg.xml" value="0.244" />
         <entry key="app/src/main/res/drawable/vie_bg.xml" value="0.246" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
@@ -15,6 +16,7 @@
         <entry key="app/src/main/res/layout/fragment_onboarding2.xml" value="0.4764801025390626" />
         <entry key="app/src/main/res/layout/fragment_onboarding3.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/fragment_onboarding4.xml" value="0.3151041666666667" />
+        <entry key="app/src/main/res/layout/item_post.xml" value="0.42510190082685595" />
         <entry key="app/src/main/res/layout/login_tab_fragment.xml" value="0.24572448730468757" />
         <entry key="app/src/main/res/layout/registration_tab_fragment.xml" value="0.27135467529296875" />
         <entry key="app/src/main/res/layout/signup_tab_fragment.xml" value="0.2635833740234375" />

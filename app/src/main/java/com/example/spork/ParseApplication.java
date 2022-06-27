@@ -6,7 +6,9 @@ import static com.example.spork.Configuration.server;
 
 import android.app.Application;
 
+import com.example.spork.feed.Post;
 import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class ParseApplication extends Application {
 
@@ -14,6 +16,9 @@ public class ParseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Register post parse model
+        ParseObject.registerSubclass(Post.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(applicationId)
