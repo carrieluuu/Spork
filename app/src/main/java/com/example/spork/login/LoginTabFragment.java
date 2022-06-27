@@ -28,7 +28,7 @@ public class LoginTabFragment extends Fragment {
     private EditText etUsername;
     private TextView tvPassword;
     private EditText etPassword;
-    private TextView tvForgetPassword;
+    private TextView tvForgotPassword;
     private Button btnLogin;
 
     @Override
@@ -39,7 +39,7 @@ public class LoginTabFragment extends Fragment {
         etUsername = root.findViewById(R.id.etUsername);
         tvPassword = root.findViewById(R.id.tvPassword);
         etPassword = root.findViewById(R.id.etPassword);
-        tvForgetPassword = root.findViewById(R.id.tvForgetPassword);
+        tvForgotPassword = root.findViewById(R.id.tvForgotPassword);
         btnLogin = root.findViewById(R.id.btnLogin);
 
         // animations
@@ -47,7 +47,7 @@ public class LoginTabFragment extends Fragment {
         etUsername.setTranslationX(800);
         tvPassword.setTranslationX(800);
         etPassword.setTranslationX(800);
-        tvForgetPassword.setTranslationX(800);
+        tvForgotPassword.setTranslationX(800);
         btnLogin.setTranslationX(800);
 
         // opacity
@@ -55,14 +55,14 @@ public class LoginTabFragment extends Fragment {
         etUsername.setAlpha(v);
         tvPassword.setAlpha(v);
         etPassword.setAlpha(v);
-        tvForgetPassword.setAlpha(v);
+        tvForgotPassword.setAlpha(v);
         btnLogin.setAlpha(v);
 
         displayAnimation(tvUsername);
         displayAnimation(etUsername);
         displayAnimation(tvPassword);
         displayAnimation(etPassword);
-        displayAnimation(tvForgetPassword);
+        displayAnimation(tvForgotPassword);
         displayAnimation(btnLogin);
 
         // if user is already logged in, go to main activity
@@ -71,7 +71,7 @@ public class LoginTabFragment extends Fragment {
         }
 
         loginButton();
-
+        forgotPassword();
 
         return root;
     }
@@ -108,6 +108,18 @@ public class LoginTabFragment extends Fragment {
             }
         });
     }
+
+    private void forgotPassword() {
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG,"onClick forget password button");
+                Intent i = new Intent(getContext(), ForgotPassword.class);
+                startActivity(i);
+            }
+        });
+    }
+
 
     private void goMainActivity() {
         Intent i = new Intent(getContext(), MainActivity.class);

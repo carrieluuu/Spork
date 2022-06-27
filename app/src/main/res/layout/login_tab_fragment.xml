@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_bg"
         android:hint="Enter your username"
+        android:inputType="text"
+        android:imeOptions="actionDone"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -47,6 +49,7 @@
         android:background="@drawable/edit_text_bg"
         android:hint="Enter your password"
         android:inputType="textPassword"
+        android:imeOptions="actionDone"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -58,12 +61,13 @@
         app:layout_constraintWidth_percent=".8" />
 
     <TextView
-        android:id="@+id/tvForgetPassword"
+        android:id="@+id/tvForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:text="Forget Password?"
+        android:text="Forgot Password?"
+        android:clickable="true"
         android:textColor="@color/blue_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/etPassword"

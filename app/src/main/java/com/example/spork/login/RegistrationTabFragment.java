@@ -118,6 +118,8 @@ public class RegistrationTabFragment extends Fragment {
         user.signUpInBackground(e -> {
             if (e == null) {
                 // Hooray! Let them use the app now.
+                goMainActivity();
+                Toast.makeText(getContext(), "Sign up success!", Toast.LENGTH_SHORT).show();
             } else {
                 // Sign up didn't succeed. Look at the ParseException
                 // to figure out what went wrong
@@ -125,8 +127,7 @@ public class RegistrationTabFragment extends Fragment {
             }
         });
 
-        goMainActivity();
-        Toast.makeText(getContext(), "Sign up success!", Toast.LENGTH_SHORT).show();
+
     }
 
 
