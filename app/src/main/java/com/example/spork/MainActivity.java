@@ -1,6 +1,9 @@
 package com.example.spork;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +11,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.spork.feed.FeedFragment;
+import com.example.spork.home.HomeFragment;
 import com.example.spork.login.LoginActivity;
+import com.example.spork.profile.ProfileFragment;
+import com.example.spork.search.SearchFragment;
+import com.google.android.material.navigation.NavigationBarView;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -17,10 +25,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    final FragmentManager fragmentManager = getSupportFragmentManager();
+    private NavigationBarView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        bottomNavigation();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,6 +59,36 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void bottomNavigation() {
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
+        new NavigationBarView.OnItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment;
+                switch (item.getItemId()) {
+                    case R.id.action_home:
+                        fragment = new HomeFragment();
+                        break;
+                    case R.id.action_search:
+                        fragment = new SearchFragment();
+                        break;
+                    case R.id.action_feed:
+                        fragment = new FeedFragment();
+                        break;
+                    case R.id.action_profile:
+                    default:
+                        fragment = new ProfileFragment();
+                        break;
+                }
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
+            }
+        };
+        // Set default selection
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
 
     private void goLoginActivity() {
