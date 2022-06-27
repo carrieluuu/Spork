@@ -6,14 +6,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import java.lang.ref.WeakReference;
+
 public class LoginAdapter extends FragmentPagerAdapter {
 
-    private Context context;
+    private WeakReference<Context> context;
     private int totalTabs;
 
     public LoginAdapter(FragmentManager fm, Context context, int totalTabs) {
         super(fm);
-        this.context = context;
+        this.context = new WeakReference<Context>(context);
         this.totalTabs = totalTabs;
     }
 

@@ -69,19 +69,24 @@ public class RegistrationTabFragment extends Fragment {
         etPassword.setAlpha(v);
         btnRegister.setAlpha(v);
 
-        tvName.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        etName.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        tvUsername.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        etUsername.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        tvEmail.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        etEmail.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        tvPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        etPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        btnRegister.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
+        displayAnimation(tvName);
+        displayAnimation(etName);
+        displayAnimation(tvUsername);
+        displayAnimation(etUsername);
+        displayAnimation(tvEmail);
+        displayAnimation(etEmail);
+        displayAnimation(tvPassword);
+        displayAnimation(etPassword);
+        displayAnimation(btnRegister);
 
         registerButton();
 
         return root;
+    }
+
+    private void displayAnimation(View v) {
+        v.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
+
     }
 
     private void registerButton() {
@@ -113,6 +118,8 @@ public class RegistrationTabFragment extends Fragment {
         user.signUpInBackground(e -> {
             if (e == null) {
                 // Hooray! Let them use the app now.
+                goMainActivity();
+                Toast.makeText(getContext(), "Sign up success!", Toast.LENGTH_SHORT).show();
             } else {
                 // Sign up didn't succeed. Look at the ParseException
                 // to figure out what went wrong
@@ -120,8 +127,7 @@ public class RegistrationTabFragment extends Fragment {
             }
         });
 
-        goMainActivity();
-        Toast.makeText(getContext(), "Sign up success!", Toast.LENGTH_SHORT).show();
+
     }
 
 

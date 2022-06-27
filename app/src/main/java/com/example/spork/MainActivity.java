@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, "Issue with logout", e);
                         return;
                     }
-                    // TODO: Navigate back to the log in activity if the user has signed out properly
                     goLoginActivity();
                 }
             });
