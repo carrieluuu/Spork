@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jem.liquidswipe.layout.LiquidSwipeConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".onboarding.SplashScreenActivity"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/ivOnboarding"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/onboarding1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.369"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.301" />
+
+    <TextView
+        android:id="@+id/tvSporkName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Spork"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:flow_verticalBias="0"
+        app:layout_constraintBottom_toTopOf="@id/ivOnboarding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/ivOnboarding"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.212" />
+
+    <TextView
+        android:id="@+id/tvSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:text="Skip"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/tvSporkName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.806"
+        app:layout_constraintStart_toEndOf="@id/tvSporkName"
+        app:layout_constraintTop_toTopOf="@id/tvSporkName"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvOnboardingHeader1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:text="Nearby"
+        android:textSize="42sp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ivOnboarding"
+        app:layout_constraintTop_toBottomOf="@id/ivOnboarding"/>
+
+    <TextView
+        android:id="@+id/tvOnboardingHeader2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="restaurants"
+        android:textSize="56sp"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvOnboardingHeader1"
+        app:layout_constraintTop_toBottomOf="@id/tvOnboardingHeader1" />
+
+    <TextView
+        android:id="@+id/tvOnboardingDescription"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="You don't have to go far to find a good restaurant, we have provided all the restaurants that is near you."
+        android:textSize="16sp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="5dp"
+        app:layout_constraintHeight_percent=".1"
+        app:layout_constraintWidth_percent=".5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvOnboardingHeader2"
+        app:layout_constraintTop_toBottomOf="@id/tvOnboardingHeader2" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:src="@drawable/onboarding_tab1"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/tvOnboardingDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvOnboardingDescription"
+        app:layout_constraintVertical_bias=".6" />
+
+</com.jem.liquidswipe.layout.LiquidSwipeConstraintLayout>
