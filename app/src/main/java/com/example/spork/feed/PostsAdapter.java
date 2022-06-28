@@ -1,6 +1,7 @@
 package com.example.spork.feed;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +17,17 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.R;
 import com.parse.ParseFile;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
     public static final String TAG = "PostsAdapter";
 
-    private Context context;
+    private WeakReference<Context> context;
     private List<Post> posts;
 
     public PostsAdapter(Context context, List<Post> posts) {
-        this.context = context;
+        this.context = new WeakReference<Context>(context);
         this.posts = posts;
     }
 
@@ -49,7 +51,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        View view = LayoutInflater.from(context.get()).inflate(R.layout.item_post, parent, false);
         return new ViewHolder(view);
     }
 
@@ -62,15 +64,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvUsername;
-        private ImageView ivProfilePic;
         private ImageView ivImage;
+        private ImageView ivProfilePic;
         private TextView tvLocation;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             tvUsername = itemView.findViewById(R.id.tvUsername);
-            ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             ivImage = itemView.findViewById(R.id.ivImage);
+            ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             tvLocation = itemView.findViewById(R.id.tvLocation);
 
         }
@@ -80,10 +83,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             // Bind the post data to the view elements
             tvUsername.setText(post.getUser().getUsername());
+            tvLocation.setText(post.getLocation().toString());
 
             ParseFile image = post.getImage();
             if (image != null) {
-                Glide.with(context)
+                Glide.with(context.get())
                         .load(image.getUrl())
                         .apply(new RequestOptions()
                                 .centerCrop()
@@ -93,11 +97,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             ParseFile profilePic = post.getUser().getParseFile("profilePic");
             if (profilePic != null) {
-                Glide.with(context)
+                Glide.with(context.get())
                         .load(profilePic.getUrl())
                         .apply(RequestOptions.circleCropTransform())
                         .into(ivProfilePic);
             }
         }
+
     }
+
 }

@@ -16,7 +16,7 @@ import com.example.spork.home.HomeFragment;
 import com.example.spork.login.LoginActivity;
 import com.example.spork.profile.ProfileFragment;
 import com.example.spork.search.SearchFragment;
-import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     final FragmentManager fragmentManager = getSupportFragmentManager();
-    private NavigationBarView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void bottomNavigation() {
         bottomNavigationView = findViewById(R.id.bottomNavigation);
-        new NavigationBarView.OnItemSelectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
-        };
+        });
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
