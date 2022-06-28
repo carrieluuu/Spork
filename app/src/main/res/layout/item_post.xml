@@ -65,5 +65,16 @@
             android:layout_toEndOf="@+id/ivProfilePic"
             app:srcCompat="@drawable/ic_post_location" />
 
+        <TextView
+            android:id="@+id/tvTimeStamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvLocation"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="35dp"
+            android:textSize="12sp"
+            tools:text="just now" />
+
     </RelativeLayout>
 </RelativeLayout>

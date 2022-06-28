@@ -18,6 +18,7 @@ import com.example.spork.R;
 import com.parse.ParseFile;
 
 import java.lang.ref.WeakReference;
+import java.util.Date;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
@@ -67,6 +68,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageView ivImage;
         private ImageView ivProfilePic;
         private TextView tvLocation;
+        private TextView tvTimestamp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +77,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ivImage = itemView.findViewById(R.id.ivImage);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             tvLocation = itemView.findViewById(R.id.tvLocation);
+            tvTimestamp = itemView.findViewById(R.id.tvTimeStamp);
 
         }
 
@@ -84,6 +87,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             // Bind the post data to the view elements
             tvUsername.setText(post.getUser().getUsername());
             tvLocation.setText(post.getLocation().toString());
+            Date createdAt = post.getCreatedAt();
+            tvTimestamp.setText(Post.calculateTimeAgo(createdAt));
 
             ParseFile image = post.getImage();
             if (image != null) {
