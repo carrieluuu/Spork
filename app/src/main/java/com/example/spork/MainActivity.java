@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.spork.feed.ComposeActivity;
 import com.example.spork.feed.FeedFragment;
 import com.example.spork.home.HomeFragment;
 import com.example.spork.login.LoginActivity;
@@ -58,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
+        else if (item.getItemId() == R.id.btnCompose) {
+                Intent i = new Intent(this, ComposeActivity.class);
+                startActivity(i);
+
+            }
+
         return super.onOptionsItemSelected(item);
     }
 
