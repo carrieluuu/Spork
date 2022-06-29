@@ -28,6 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Spork"
         tools:targetApi="31">
+
         <activity
             android:name=".feed.ComposeActivity"
             android:exported="false" />
@@ -38,6 +39,9 @@
         <meta-data
             android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -63,7 +67,7 @@
             android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".login.ForgotPassword"
             android:exported="false" />

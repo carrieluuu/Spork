@@ -6,17 +6,23 @@
     android:orientation="vertical"
     tools:context=".feed.ComposeActivity">
 
+    <ImageView
+        android:id="@+id/ivPostImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <Button
         android:id="@+id/btnCaptureImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Take Picture" />
 
-    <ImageView
-        android:id="@+id/ivPostImage"
+    <Button
+        android:id="@+id/btnAddLocation"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_height="wrap_content"
+        android:text="Add Location" />
 
     <Button
         android:id="@+id/btnSubmit"
