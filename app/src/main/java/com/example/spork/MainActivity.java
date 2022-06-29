@@ -1,5 +1,7 @@
 package com.example.spork;
 
+import static com.example.spork.Configuration.placesAPIKey;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,12 +13,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.spork.feed.ComposeActivity;
+import com.example.spork.feed.ComposeFragment;
 import com.example.spork.feed.FeedFragment;
 import com.example.spork.home.HomeFragment;
 import com.example.spork.login.LoginActivity;
 import com.example.spork.profile.ProfileFragment;
 import com.example.spork.search.SearchFragment;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
@@ -35,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigation();
+
+        // Initialize the SDK
+        Places.initialize(getApplicationContext(), placesAPIKey);
+
+        // Create a new PlacesClient instance
+        PlacesClient placesClient = Places.createClient(this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,10 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
         else if (item.getItemId() == R.id.btnCompose) {
-                Intent i = new Intent(this, ComposeActivity.class);
-                startActivity(i);
+            fragmentManager.beginTransaction().replace(R.id.flContainer, new ComposeFragment()).commit();
 
-            }
+        }
 
         return super.onOptionsItemSelected(item);
     }

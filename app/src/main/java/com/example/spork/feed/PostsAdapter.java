@@ -85,7 +85,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             // Bind the post data to the view elements
             tvUsername.setText(post.getUser().getUsername());
-            tvLocation.setText(post.getLocation().toString());
+            tvLocation.setText(post.getLocation());
             Date createdAt = post.getCreatedAt();
             tvTimestamp.setText(Post.calculateTimeAgo(createdAt));
 

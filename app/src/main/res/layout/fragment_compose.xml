@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".feed.ComposeActivity">
+    android:id="@+id/compose_fragment_container">
 
     <ImageView
         android:id="@+id/ivPostImage"
@@ -17,6 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Take Picture" />
+
+    <TextView
+        android:id="@+id/tvLocationName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Sample Location" />
 
     <Button
         android:id="@+id/btnAddLocation"

@@ -15,6 +15,8 @@ public class Post extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_LOCATION = "location";
+    public static final String KEY_PLACEID = "placeId";
+
 
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
@@ -32,13 +34,13 @@ public class Post extends ParseObject {
         put(KEY_IMAGE, parseFile);
     }
 
-    public ParseGeoPoint getLocation() {
-        return getParseGeoPoint(KEY_LOCATION);
-    }
+    public String getLocation() { return getString(KEY_LOCATION); }
 
-    public void getLocation(ParseGeoPoint parseGeoPoint) {
-        put(KEY_LOCATION, parseGeoPoint);
-    }
+    public void setLocation(String location) { put(KEY_LOCATION, location); }
+
+    public String getPlaceId() { return getString(KEY_PLACEID); }
+
+    public void setPlaceId(String placeId) { put(KEY_PLACEID, placeId); }
 
     public static String calculateTimeAgo(Date createdAt) {
 

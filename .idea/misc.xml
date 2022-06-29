@@ -10,12 +10,14 @@
         <entry key="app/src/main/res/drawable/edit_text_bg.xml" value="0.244" />
         <entry key="app/src/main/res/drawable/post_info.xml" value="0.179" />
         <entry key="app/src/main/res/drawable/vie_bg.xml" value="0.246" />
-        <entry key="app/src/main/res/layout/activity_compose.xml" value="0.34427083333333336" />
+        <entry key="app/src/main/res/layout/activity_compose.xml" value="0.19576009114583337" />
         <entry key="app/src/main/res/layout/activity_feed.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1734375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.14871368408203126" />
+        <entry key="app/src/main/res/layout/activity_maps.xml" value="0.2635416666666667" />
         <entry key="app/src/main/res/layout/activity_profile_fragment.xml" value="0.225" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2240458170572917" />
+        <entry key="app/src/main/res/layout/fragment_compose.xml" value="0.1852355072463768" />
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.225" />
         <entry key="app/src/main/res/layout/fragment_onboarding1.xml" value="0.5563247680664063" />
         <entry key="app/src/main/res/layout/fragment_onboarding2.xml" value="0.4764801025390626" />
