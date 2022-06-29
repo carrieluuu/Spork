@@ -13,4 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-/src/main/java/com.example.spor/Configuration.java
+app/src/main/java/com/example/spork/Configuration.java
