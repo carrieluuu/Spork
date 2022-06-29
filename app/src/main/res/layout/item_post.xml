@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/ivProfilePic"
-            android:layout_marginStart="42dp"
+            android:layout_marginStart="25dp"
             android:layout_toEndOf="@+id/ivProfilePic"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvUsername"
-            android:layout_marginStart="42dp"
+            android:layout_marginStart="25dp"
             android:layout_toEndOf="@+id/ivProfilePic"
             app:srcCompat="@drawable/ic_post_location" />
 
