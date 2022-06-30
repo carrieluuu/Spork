@@ -1,9 +1,5 @@
 package com.example.spork;
 
-import static com.example.spork.Configuration.applicationId;
-import static com.example.spork.Configuration.clientKey;
-import static com.example.spork.Configuration.server;
-
 import android.app.Application;
 
 import com.example.spork.feed.Post;
@@ -21,9 +17,9 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Post.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId(applicationId)
-                .clientKey(clientKey)
-                .server(server)
+                .applicationId(BuildConfig.PARSE_APPLICATION_ID)
+                .clientKey(BuildConfig.PARSE_CLIENT_KEY)
+                .server(BuildConfig.PARSE_SERVER)
                 .build()
         );
     }

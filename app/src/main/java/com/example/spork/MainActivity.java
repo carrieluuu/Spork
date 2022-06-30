@@ -1,7 +1,5 @@
 package com.example.spork;
 
-import static com.example.spork.Configuration.placesAPIKey;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -41,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation();
 
         // Initialize the SDK
+        String placesAPIKey = BuildConfig.MAPS_API_KEY;
         Places.initialize(getApplicationContext(), placesAPIKey);
 
         // Create a new PlacesClient instance

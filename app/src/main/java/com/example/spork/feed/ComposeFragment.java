@@ -2,7 +2,6 @@ package com.example.spork.feed;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
-import static com.example.spork.Configuration.placesAPIKey;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -35,9 +34,7 @@ import android.widget.Toast;
 
 import com.example.spork.R;
 import com.google.android.gms.common.api.Status;
-import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
