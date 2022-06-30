@@ -176,37 +176,35 @@ public class ComposeFragment extends Fragment {
 
     }
 
-    // Parse has a limit of 10MB per file, so you'll want to resize each photo before uploading to Parse.
+    // Parse has a limit of 10MB per file, so resize each photo before uploading to Parse.
     private Bitmap resize(Bitmap takenImage) {
         Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, WIDTH);
         // Configure byte output stream
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         // Compress the image further
         resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-        // Create a new file for the resized bitmap
-        File resizedFile = getPhotoFileUri(photoFileName + "_resized");
+
         try {
+            // Create a new file for the resized bitmap
+            File resizedFile = getPhotoFileUri(photoFileName + "_resized");
             resizedFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(resizedFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        // Write the bytes of the bitmap to file
-        try {
+
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(resizedFile);
+            } catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+
+            // Write the bytes of the bitmap to file
             fos.write(bytes.toByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
+
             fos.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return resizedBitmap;
     }
 
