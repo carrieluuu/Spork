@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     private static final int REQUEST_CODE = 100;
-    public static final int RADIUS =  5000;
+    public static final int RADIUS =  1000;
 
     private GoogleMap mMap;
     private FusedLocationProviderClient client;
@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
                     .into(ivProfile);
         }
 
-        client = LocationServices.getFusedLocationProviderClient(getContext());
+        client = LocationServices.getFusedLocationProviderClient(getActivity());
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -101,18 +101,33 @@ public class HomeFragment extends Fragment {
             mapFragment.getMapAsync(callback);
         }
 
-        checkPermissions();
-
-        StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/findplacefromtext/json");
-        sb.append("?fields=name%2Cgeometry/location");
-        sb.append("&input=restaurant");
-        sb.append("&inputtype=textquery");
-        sb.append("&locationbias=circle%3A" + RADIUS + currentLat + "%2C" + currentLng);
-        sb.append("&key=" + BuildConfig.MAPS_API_KEY);
-
-        url = sb.toString();
-        Log.i(TAG, url);
-
+        // check condition
+        if (ContextCompat.checkSelfPermission(
+                getActivity(),
+                Manifest.permission
+                        .ACCESS_FINE_LOCATION)
+                == PackageManager
+                .PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(
+                getActivity(),
+                Manifest.permission
+                        .ACCESS_COARSE_LOCATION)
+                == PackageManager
+                .PERMISSION_GRANTED) {
+            // When permission is granted
+            // Call method
+            getCurrentLocation();
+        } else {
+            // When permission is not granted
+            // Call method
+            requestPermissions(
+                    new String[]{
+                            Manifest.permission
+                                    .ACCESS_FINE_LOCATION,
+                            Manifest.permission
+                                    .ACCESS_COARSE_LOCATION},
+                    REQUEST_CODE);
+        }
 
     }
 
@@ -122,36 +137,8 @@ public class HomeFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
 
-            Object dataFetch[] = new Object[2];
-            dataFetch[0] = mMap;
-            dataFetch[1] = url;
-
-            FetchData fetchData  = new FetchData();
-            fetchData.execute(dataFetch);
-
-            // Add marker at current location
-            getCurrentLocation();
-
         }
     };
-
-
-    private void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(
-                getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(
-                    new String[] {
-                            Manifest.permission
-                                    .ACCESS_FINE_LOCATION,
-                            Manifest.permission
-                                    .ACCESS_COARSE_LOCATION },
-                    REQUEST_CODE);
-        }
-        else {
-            getCurrentLocation();
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(
@@ -247,7 +234,10 @@ public class HomeFragment extends Fragment {
 
                                         // Set longitude
                                         currentLng = location1.getLongitude();
+
                                     }
+
+
                                 };
 
                                 // Request location updates
@@ -257,14 +247,31 @@ public class HomeFragment extends Fragment {
                                         Looper.myLooper());
                             }
 
+                            StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
+                            sb.append("?fields=name%2Cgeometry/location");
+                            // sb.append("&input=food");
+                            sb.append("&location=" + currentLat + "%2C" + currentLng);
+                            sb.append("&radius=" + RADIUS);
+                            sb.append("&type=restaurant");
+                            sb.append("&key=" + BuildConfig.MAPS_API_KEY);
+
+                            url = sb.toString();
+                            Log.i(TAG, url);
+
                             LatLng currentLatLng = new LatLng(currentLat, currentLng);
+                            Log.i(TAG, "currentLat: " + currentLat + " currentLng: " + currentLng);
                             mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
 
-                            Log.i(TAG, "current lat: " + currentLat +" and current lng: " + currentLng);
+                            Object dataFetch[] = new Object[2];
+                            dataFetch[0] = mMap;
+                            dataFetch[1] = url;
 
+                            FetchData fetchData  = new FetchData();
+                            fetchData.execute(dataFetch);
                         }
                     });
+
         }
         else {
             // When location service is not enabled
@@ -276,6 +283,7 @@ public class HomeFragment extends Fragment {
                             .setFlags(
                                     Intent.FLAG_ACTIVITY_NEW_TASK));
         }
+
     }
 
 

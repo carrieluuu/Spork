@@ -26,7 +26,7 @@ public class FetchData extends AsyncTask <Object, String, String> {
     protected void onPostExecute(String s) {
         try {
             JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonArray = jsonObject.getJSONArray("candidates");
+            JSONArray jsonArray = jsonObject.getJSONArray("results");
             Log.i(TAG, "array size: " + jsonArray.length());
 
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -45,7 +45,6 @@ public class FetchData extends AsyncTask <Object, String, String> {
                 markerOptions.title(name);
                 markerOptions.position(latLng);
                 googleMap.addMarker(markerOptions);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
             }
 
         } catch (JSONException e) {
