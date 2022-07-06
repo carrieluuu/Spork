@@ -7,4 +7,10 @@
         android:icon="@drawable/logout"
         android:title="Item"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/btnCompose"
+        android:icon="@drawable/ic_compose"
+        android:title="Item"
+        app:showAsAction="always" />
 </menu>

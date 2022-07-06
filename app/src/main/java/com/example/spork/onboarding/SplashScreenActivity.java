@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,7 +20,10 @@ import android.widget.ImageView;
 
 import com.airbnb.lottie.Lottie;
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.spork.MainActivity;
 import com.example.spork.R;
+import com.example.spork.login.LoginActivity;
+import com.parse.ParseUser;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -51,6 +55,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         ivSplashLogo.animate().translationY(1400).setDuration(1000).setStartDelay(4000);
         lottieAnimation.animate().translationY(1400).setDuration(1000).setStartDelay(4000);
 
+        if (ParseUser.getCurrentUser() != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            }, 3000);
+
+        }
 
     }
 
@@ -87,4 +102,5 @@ public class SplashScreenActivity extends AppCompatActivity {
            return NUM_PAGES;
         }
     }
+
 }
