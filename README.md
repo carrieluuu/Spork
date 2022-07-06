@@ -109,10 +109,9 @@ https://www.figma.com/file/a7K0nomcTwHmeO7wQDASZV/Spork-Wireframing?node-id=0%3A
    | objectId      | String   | unique id for the user post (default field) |
    | author        | Pointer to User| user that created the post |
    | image         | File     | image that user posts |
-   | caption       | String   | image caption by author |
-   | commentsCount | Number   | number of comments that has been posted to an image |
-   | likesCount    | Number   | number of likes for the post |
    | createdAt     | DateTime | date when post is created (default field) |
+   | location      | String   | location/restaurant at which the post is taken at |
+   | placeId       | String   | id related to Places API |
    
    
 ### Networking
