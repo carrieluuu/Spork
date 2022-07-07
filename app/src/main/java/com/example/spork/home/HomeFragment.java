@@ -71,6 +71,14 @@ public class HomeFragment extends Fragment {
     private boolean zoomIn = false;
     private boolean zoomOut = false;
 
+    // assuming that the user has selected the top 3 preferences: price, proximity, rating
+    private int priceWeight = 1;
+    private int proximityWeight = 1;
+    private int currentlyOpenWeight = 0;
+    // the following should be filtered thru in fetchdata class
+    private int ratingWeight = 1;
+    private int popularityWeight = 0;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -106,7 +114,7 @@ public class HomeFragment extends Fragment {
         fabZoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                radius -= 1000;
+                radius -= 500;
                 zoomIn = true;
                 zoomOut = false;
                 populateMap();
@@ -120,7 +128,7 @@ public class HomeFragment extends Fragment {
                     radius = MAX_RADIUS;
                     Toast.makeText(getContext(), "Maximum zoom out reached", Toast.LENGTH_LONG).show();
                 } else {
-                    radius += 2000;
+                    radius += 1000;
                     zoomIn = false;
                     zoomOut = true;
                 }
@@ -282,10 +290,16 @@ public class HomeFragment extends Fragment {
                                         Looper.myLooper());
                             }
 
-                            StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
-                            sb.append("?fields=name%2Cgeometry/location");
-                            sb.append("&location=" + currentLat + "%2C" + currentLng);
-                            sb.append("&radius=" + radius);
+                            StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+                            sb.append("location=" + currentLat + "%2C" + currentLng);
+                            if (priceWeight == 1)
+                                sb.append("&minprice=0" + "&maxprice=2");
+                            if (proximityWeight == 1)
+                                sb.append("&rankby=distance");
+                            else
+                                sb.append("&radius=" + radius);
+                            if (currentlyOpenWeight == 1)
+                                sb.append("&opennow=true");
                             sb.append("&type=restaurant");
                             sb.append("&key=" + BuildConfig.MAPS_API_KEY);
 
@@ -295,12 +309,14 @@ public class HomeFragment extends Fragment {
                             LatLng currentLatLng = new LatLng(currentLat, currentLng);
                             Log.i(TAG, "currentLat: " + currentLat + " currentLng: " + currentLng);
                             mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
-                           mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
 
                             // fetch data from json to add nearby restaurants onto the map
-                            Object dataFetch[] = new Object[2];
+                            Object dataFetch[] = new Object[4];
                             dataFetch[0] = mMap;
                             dataFetch[1] = url;
+                            dataFetch[2] = ratingWeight;
+                            dataFetch[3] = popularityWeight;
 
                             FetchData fetchData  = new FetchData();
                             fetchData.execute(dataFetch);

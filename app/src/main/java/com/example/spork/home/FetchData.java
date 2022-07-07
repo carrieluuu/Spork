@@ -3,7 +3,6 @@ package com.example.spork.home;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -21,6 +20,8 @@ public class FetchData extends AsyncTask <Object, String, String> {
     private String googleNearbyRestaurantsData;
     private GoogleMap googleMap;
     private String url;
+    private int ratingWeight;
+    private int popularityWeight;
 
     @Override
     protected void onPostExecute(String s) {
@@ -36,8 +37,19 @@ public class FetchData extends AsyncTask <Object, String, String> {
                 String lat = getLocation.getString("lat");
                 String lng = getLocation.getString("lng");
 
-                JSONObject getName = jsonArray.getJSONObject(i);
-                String name = getName.getString("name");
+                String name = restaurant.getString("name");
+
+                if (ratingWeight == 1) {
+                    String rating = restaurant.getString("rating");
+                    if (Double.parseDouble(rating) < 2.5)
+                        continue;
+                }
+
+                if (popularityWeight == 1) {
+                    String numRatings = restaurant.getString("user_ratings_total");
+                    if (Integer.parseInt(numRatings) < 1500)
+                        continue;
+                }
 
                 LatLng latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
 
@@ -59,6 +71,9 @@ public class FetchData extends AsyncTask <Object, String, String> {
             url = (String) objects[1];
             DownloadUrl downloadUrl = new DownloadUrl();
             googleNearbyRestaurantsData = downloadUrl.retrieveUrl(url);
+            ratingWeight = (int) objects[2];
+            popularityWeight = (int) objects[3];
+
         } catch (IOException e) {
             e.printStackTrace();
         }
