@@ -2,11 +2,9 @@ package com.example.spork.recommendation;
 
 import com.example.spork.Restaurant;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
 
 public class RecommendationScore {
     public static final String TAG = "RecommendationScore";
@@ -79,12 +77,13 @@ public class RecommendationScore {
     }
 
     public void calculateScore(Restaurant restaurant) {
-        priceScore = (restaurant.getPrice() / PRICE_SCALE) * priceWeight;
+        priceScore = ((double) restaurant.getPrice() / PRICE_SCALE) * priceWeight;
+
         ratingScore = (restaurant.getRating() / RATING_SCALE) * ratingWeight;
 
         popularityScore = (restaurant.getPopularity() / POPULARITY_SCALE) * popularityWeight;
 
-        proximityScore = (PROXIMITY_SCALE - restaurant.getProximity()) * proximityWeight;
+        proximityScore = (restaurant.getProximity() / PROXIMITY_SCALE) * popularityWeight;
 
         totalScore = priceScore + ratingScore + popularityScore + proximityScore;
 
