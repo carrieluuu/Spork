@@ -46,6 +46,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 /**
@@ -66,7 +67,7 @@ public class HomeFragment extends Fragment {
     private double currentLat;
     private double currentLng;
     private String url;
-    private int radius = 1000;
+    private int radius = 5000;
     private int zoom = 15;
     private boolean zoomIn = false;
     private boolean zoomOut = false;
@@ -282,6 +283,14 @@ public class HomeFragment extends Fragment {
                                         Looper.myLooper());
                             }
 
+                            ParseGeoPoint currentLocation = new ParseGeoPoint(currentLat, currentLng);
+                            ParseUser.getCurrentUser().put("currentLocation", currentLocation);
+
+                            LatLng currentLatLng = new LatLng(currentLat, currentLng);
+                            Log.i(TAG, "currentLat: " + currentLat + " currentLng: " + currentLng);
+                            mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
+
                             StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
                             sb.append("?fields=name%2Cgeometry/location");
                             sb.append("&location=" + currentLat + "%2C" + currentLng);
@@ -291,11 +300,6 @@ public class HomeFragment extends Fragment {
 
                             url = sb.toString();
                             Log.i(TAG, url);
-
-                            LatLng currentLatLng = new LatLng(currentLat, currentLng);
-                            Log.i(TAG, "currentLat: " + currentLat + " currentLng: " + currentLng);
-                            mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
-                           mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
 
                             // fetch data from json to add nearby restaurants onto the map
                             Object dataFetch[] = new Object[2];
