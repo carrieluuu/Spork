@@ -10,7 +10,6 @@ public class Restaurant {
     private String id;
     private String name;
     private LatLng location;
-    private double distance;
     private double proximity;
     private int price;
     private double rating;
