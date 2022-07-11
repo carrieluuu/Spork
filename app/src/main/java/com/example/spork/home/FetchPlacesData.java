@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FetchData extends AsyncTask <Object, String, String> {
+public class FetchPlacesData extends AsyncTask <Object, String, String> {
 
-    private static final String TAG = "FetchData";
+    private static final String TAG = "FetchPlacesData";
 
     private String googleNearbyRestaurantsData;
     private GoogleMap googleMap;
@@ -33,14 +33,22 @@ public class FetchData extends AsyncTask <Object, String, String> {
     @Override
     protected void onPostExecute(String s) {
         RecommendationScore rs = new RecommendationScore(restaurantList);
+        Log.i(TAG, "List size: " + restaurantList.size());
         restaurantList = rs.sortList(restaurantList);
 
-        for (int i = 0; i < 10; i++) {
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.title(restaurantList.get(i).getName());
-            markerOptions.position(restaurantList.get(i).getLocation());
-            googleMap.addMarker(markerOptions);
+        int max = 10;
+        if (restaurantList.isEmpty()) {
+            max = 0;
         }
+         else if (restaurantList.size() < 10) {
+             max = restaurantList.size();
+        }
+         for (int i = 0; i < max; i++) {
+             MarkerOptions markerOptions = new MarkerOptions();
+             markerOptions.title(restaurantList.get(i).getName());
+             markerOptions.position(restaurantList.get(i).getLocation());
+             googleMap.addMarker(markerOptions);
+         }
     }
 
     @Override
@@ -55,9 +63,27 @@ public class FetchData extends AsyncTask <Object, String, String> {
             DownloadUrl downloadUrl = new DownloadUrl();
 
             for (int i = 0; i < 3; i ++) {
-                googleNearbyRestaurantsData = downloadUrl.retrieveUrl(url);
+                Log.i(TAG, "current url: " + url);
+
+                String googleNearbyRestaurantsData = downloadUrl.retrieveUrl(url);
 
                 JSONObject jsonObject = new JSONObject(googleNearbyRestaurantsData);
+
+                String status = jsonObject.getString("status");
+
+                if (status.equals("INVALID_REQUEST")) {
+                    for (int k = 1; k < 5; k++) {
+                        Thread.sleep(1000);
+                        Log.i(TAG, "Retrying for invalid request." + k + " times.");
+                        googleNearbyRestaurantsData = downloadUrl.retrieveUrl(url);
+
+                        jsonObject = new JSONObject(googleNearbyRestaurantsData);
+                        status = jsonObject.getString("status");
+                        if (!status.equals("INVALID_REQUEST")) {
+                            break;
+                        }
+                    }
+                }
 
                 JSONArray jsonArray = jsonObject.getJSONArray("results");
 
@@ -100,15 +126,17 @@ public class FetchData extends AsyncTask <Object, String, String> {
                     nextPageToken = jsonObject.getString("next_page_token");
                     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=" + nextPageToken + "&key=" + BuildConfig.MAPS_API_KEY;
 
+                    Thread.sleep(2000);
+
                     Log.i(TAG, "new url:" + url);
                 } else {
                     break;
                 }
             }
 
-        } catch (IOException | JSONException e) {
+        } catch (IOException | JSONException | InterruptedException e) {
             e.printStackTrace();
         }
-        return googleNearbyRestaurantsData;
+        return "";
     }
 }

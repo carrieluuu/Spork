@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,7 +28,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.BuildConfig;
 import com.example.spork.R;
-import com.example.spork.login.LoginActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -302,12 +300,12 @@ public class HomeFragment extends Fragment {
                             Log.i(TAG, url);
 
                             // fetch data from json to add nearby restaurants onto the map
-                            Object dataFetch[] = new Object[2];
-                            dataFetch[0] = mMap;
-                            dataFetch[1] = url;
+                            Object dataFetchPlaces[] = new Object[2];
+                            dataFetchPlaces[0] = mMap;
+                            dataFetchPlaces[1] = url;
 
-                            FetchData fetchData  = new FetchData();
-                            fetchData.execute(dataFetch);
+                            FetchPlacesData fetchPlacesData  = new FetchPlacesData();
+                            fetchPlacesData.execute(dataFetchPlaces);
 
                             if (zoomIn) {
                                 mMap.clear();

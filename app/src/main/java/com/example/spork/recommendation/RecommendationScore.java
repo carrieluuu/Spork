@@ -1,6 +1,10 @@
 package com.example.spork.recommendation;
 
 import com.example.spork.Restaurant;
+import com.example.spork.onboarding.OnboardingFragment1;
+import com.example.spork.onboarding.OnboardingFragment2;
+import com.example.spork.onboarding.OnboardingFragment3;
+import com.example.spork.onboarding.OnboardingFragment4;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -77,7 +81,21 @@ public class RecommendationScore {
     }
 
     public void calculateScore(Restaurant restaurant) {
-        priceScore = ((double) restaurant.getPrice() / PRICE_SCALE) * priceWeight;
+        switch(restaurant.getPrice()) {
+            case 0:
+            case 1:
+                // most affordable price level gets full weighting
+                priceScore = priceWeight;
+                break;
+            case 2:
+                priceScore = 0.8 * priceWeight;
+                break;
+            case 3:
+                priceScore = 0.6 * priceWeight;
+                break;
+            case 4:
+                priceScore = 0.3 * priceWeight;
+        }
 
         ratingScore = (restaurant.getRating() / RATING_SCALE) * ratingWeight;
 
