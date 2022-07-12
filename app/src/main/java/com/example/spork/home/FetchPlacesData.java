@@ -1,13 +1,11 @@
 package com.example.spork.home;
 
 import android.os.AsyncTask;
-import android.os.Build;
 import android.util.Log;
 
 import com.example.spork.BuildConfig;
 import com.example.spork.Restaurant;
 import com.example.spork.recommendation.RecommendationScore;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -65,7 +63,7 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
             for (int i = 0; i < 3; i ++) {
                 Log.i(TAG, "current url: " + url);
 
-                String googleNearbyRestaurantsData = downloadUrl.retrieveUrl(url);
+                String googleNearbyRestaurantsData = downloadUrl.retrievePlacesUrl(url);
 
                 JSONObject jsonObject = new JSONObject(googleNearbyRestaurantsData);
 
@@ -75,7 +73,7 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
                     for (int k = 1; k < 5; k++) {
                         Thread.sleep(1000);
                         Log.i(TAG, "Retrying for invalid request." + k + " times.");
-                        googleNearbyRestaurantsData = downloadUrl.retrieveUrl(url);
+                        googleNearbyRestaurantsData = downloadUrl.retrievePlacesUrl(url);
 
                         jsonObject = new JSONObject(googleNearbyRestaurantsData);
                         status = jsonObject.getString("status");
@@ -137,6 +135,6 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
         } catch (IOException | JSONException | InterruptedException e) {
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 }

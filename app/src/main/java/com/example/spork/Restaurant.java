@@ -7,7 +7,8 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 public class Restaurant {
-    private String id;
+    private String mapId;
+    private String yelpId;
     private String name;
     private LatLng location;
     private double proximity;
@@ -17,9 +18,13 @@ public class Restaurant {
     private double popularity;
     private boolean openNow;
     private double score;
+    private String address;
+    private String image;
+    private String website;
+    private String phone;
 
     public Restaurant(String placeId, String restaurantName, LatLng latlng, int priceLevel, double stars, int numReviews, boolean isOpen) {
-        id = placeId;
+        mapId = placeId;
         name = restaurantName;
         location = latlng;
         price = priceLevel;
@@ -28,9 +33,24 @@ public class Restaurant {
         openNow = isOpen;
 
     }
+    public Restaurant(String id, String restaurantName, String location, String imageUrl, boolean isClosed, double stars, String websiteUrl, String phoneNumber) {
+        yelpId = id;
+        name = restaurantName;
+        address = location;
+        image = imageUrl;
+        openNow = !isClosed;
+        rating = stars;
+        website = websiteUrl;
+        phone = phoneNumber;
 
-    public String getId() {
-        return id;
+    }
+
+    public String getMapId() {
+        return mapId;
+    }
+
+    public String getYelpId() {
+        return yelpId;
     }
 
     public String getName() {
