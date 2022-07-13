@@ -35,7 +35,7 @@
 
     <TextView
         android:id="@+id/tvAddress"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/ivRestaurant"
         app:layout_constraintEnd_toEndOf="parent"
@@ -133,6 +133,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:textSize="12sp"
+        android:autoLink = "phone"
         app:layout_constraintStart_toEndOf="@+id/ivPhone"
         app:layout_constraintTop_toBottomOf="@+id/tvOpenNow"
         tools:text="(650) 665-7963" />

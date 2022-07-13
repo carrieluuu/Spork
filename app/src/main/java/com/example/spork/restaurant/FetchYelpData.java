@@ -85,7 +85,14 @@ public class FetchYelpData extends AsyncTask<Object, String, String> {
                 location += " " + getLocation.get(i);
             }
             String imageUrl = businessDetailsJSON.getString("image_url");
-            boolean isOpenNow = Boolean.parseBoolean(businessDetailsJSON.getString("is_open_now"));
+
+            boolean isOpenNow = false;
+            if (!businessDetailsJSON.has("hours")) {
+                isOpenNow = false;
+            } else {
+                String getOpenNow = (businessDetailsJSON.getString("hours")).split("is_open_now")[1];
+                isOpenNow = getOpenNow.contains("true");
+            }
             double stars = Double.parseDouble(businessDetailsJSON.getString("rating"));
             String websiteUrl = businessDetailsJSON.getString("url");
             String phoneNumber = businessDetailsJSON.getString("display_phone");

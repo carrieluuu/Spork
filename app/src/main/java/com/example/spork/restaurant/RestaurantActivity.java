@@ -47,15 +47,14 @@ public class RestaurantActivity extends AppCompatActivity {
 
         restaurant = (Restaurant) Parcels.unwrap(getIntent().getParcelableExtra("restaurant"));
 
-        int radius = 100;
-
         tvRestaurantName.setText(restaurant.getName());
         tvAddress.setText(restaurant.getAddress());
         Glide.with(this)
                 .load(restaurant.getImage())
+                .placeholder(R.drawable.restaurant_placeholder)
                 .apply(new RequestOptions()
                         .centerCrop()
-                        .transform(new RoundedCorners(radius)))
+                        .transform(new RoundedCorners(100)))
                 .into(ivRestaurant);
         if (restaurant.isOpenNow()) {
             tvOpenNow.setText("OPEN NOW");

@@ -106,7 +106,6 @@ public class Restaurant {
         this.popularity = popularity;
     }
 
-
     public boolean isOpenNow() {
         return openNow;
     }
