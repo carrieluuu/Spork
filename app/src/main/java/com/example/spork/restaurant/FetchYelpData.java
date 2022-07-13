@@ -57,7 +57,6 @@ public class FetchYelpData extends AsyncTask<Object, String, String> {
     protected String doInBackground(Object... objects) {
 
         url = (String) objects[0];
-        restaurant = (Restaurant) objects[1];
 
         YelpService yelpService = new YelpService();
 
