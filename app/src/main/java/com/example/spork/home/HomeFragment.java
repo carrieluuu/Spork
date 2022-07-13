@@ -28,7 +28,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.BuildConfig;
 import com.example.spork.R;
+import com.example.spork.Restaurant;
 import com.example.spork.restaurant.FetchYelpData;
+import com.example.spork.restaurant.RestaurantActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -48,6 +50,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -188,11 +192,13 @@ public class HomeFragment extends Fragment {
 
                     Log.i(TAG, "Business search url: "+ businessSearchUrl);
 
-                    Object yelpData[] = new Object[1];
+                    Restaurant restaurant = new Restaurant();
+                    Object yelpData[] = new Object[2];
                     yelpData[0] = businessSearchUrl;
+                    yelpData[1] = restaurant;
 
-                    FetchYelpData businessSearchYelp  = new FetchYelpData();
-                    businessSearchYelp.execute(yelpData);
+                    FetchYelpData fetchYelpData  = new FetchYelpData(getContext());
+                    fetchYelpData.execute(yelpData);
 
                     return false;
                 }
@@ -358,6 +364,7 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
 
 
 }

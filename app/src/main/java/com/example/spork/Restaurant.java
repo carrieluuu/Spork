@@ -6,6 +6,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
+@Parcel
+
 public class Restaurant {
     private String mapId;
     private String yelpId;
@@ -23,6 +27,10 @@ public class Restaurant {
     private String website;
     private String phone;
 
+    public Restaurant() {
+
+    }
+
     public Restaurant(String placeId, String restaurantName, LatLng latlng, int priceLevel, double stars, int numReviews, boolean isOpen) {
         mapId = placeId;
         name = restaurantName;
@@ -33,12 +41,12 @@ public class Restaurant {
         openNow = isOpen;
 
     }
-    public Restaurant(String id, String restaurantName, String location, String imageUrl, boolean isClosed, double stars, String websiteUrl, String phoneNumber) {
+    public Restaurant(String id, String restaurantName, String location, String imageUrl, boolean isOpenNow, double stars, String websiteUrl, String phoneNumber) {
         yelpId = id;
         name = restaurantName;
         address = location;
         image = imageUrl;
-        openNow = !isClosed;
+        openNow = isOpenNow;
         rating = stars;
         website = websiteUrl;
         phone = phoneNumber;
@@ -109,5 +117,21 @@ public class Restaurant {
 
     public void setScore(double score) {
         this.score = score;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 }
