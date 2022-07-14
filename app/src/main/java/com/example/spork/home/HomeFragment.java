@@ -30,7 +30,6 @@ import com.example.spork.BuildConfig;
 import com.example.spork.R;
 import com.example.spork.Restaurant;
 import com.example.spork.restaurant.FetchYelpData;
-import com.example.spork.restaurant.RestaurantActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -50,8 +49,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
-
-import org.parceler.Parcels;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -176,6 +173,8 @@ public class HomeFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
+
+
 
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
@@ -316,8 +315,14 @@ public class HomeFragment extends Fragment {
                             ParseGeoPoint currentLocation = new ParseGeoPoint(currentLat, currentLng);
                             ParseUser.getCurrentUser().put("currentLocation", currentLocation);
 
+                            if (currentLat == 0.0 || currentLng == 0.0) {
+                                currentLat = 37.484553142102676;
+                                currentLng = -122.14773532902916;
+                            }
+
                             LatLng currentLatLng = new LatLng(currentLat, currentLng);
                             Log.i(TAG, "currentLat: " + currentLat + " currentLng: " + currentLng);
+
                             mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
 
