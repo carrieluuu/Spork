@@ -3,6 +3,7 @@ package com.example.spork;
 import android.app.Application;
 
 import com.example.spork.feed.Post;
+import com.example.spork.restaurant.Review;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -15,6 +16,7 @@ public class ParseApplication extends Application {
 
         // Register post parse model
         ParseObject.registerSubclass(Post.class);
+        ParseObject.registerSubclass(Review.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(BuildConfig.PARSE_APPLICATION_ID)

@@ -1,6 +1,8 @@
 package com.example.spork.restaurant;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
@@ -16,8 +18,14 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.R;
 import com.example.spork.Restaurant;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RestaurantActivity extends AppCompatActivity {
 
@@ -31,6 +39,9 @@ public class RestaurantActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private TextView tvWebsite;
     private TextView tvPhoneNumber;
+    private RecyclerView rvReviews;
+    protected ReviewsAdapter adapter;
+    protected List<Review> allReviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,5 +81,42 @@ public class RestaurantActivity extends AppCompatActivity {
 
         tvPhoneNumber.setText(restaurant.getPhone());
 
+        rvReviews = findViewById(R.id.rvReviews);
+
+        allReviews = new ArrayList<>();
+        adapter = new ReviewsAdapter(this, allReviews);
+
+        // set the adapter on the recycler view
+        rvReviews.setAdapter(adapter);
+        // set the layout manager on the recycler view
+        rvReviews.setLayoutManager(new LinearLayoutManager(this));
+
+        queryReviews();
+
+    }
+
+    protected void queryReviews() {
+        ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
+        query.include(Review.KEY_USER)
+                .addDescendingOrder("createdAt")
+                .findInBackground(new FindCallback<Review>() {
+                    @Override
+                    public void done(List<Review> reviews, ParseException e) {
+                        // check for errors
+                        if (e != null) {
+                            Log.e(TAG, "Issue with getting reviews", e);
+                            return;
+                        }
+
+                        // for debugging purposes let's print every review description to logcat
+                        for (Review review : reviews) {
+                            Log.i(TAG, "Review by username: " + review.getUser().getUsername());
+                        }
+
+                        // save received reviews to list and notify adapter of new data
+                        allReviews.addAll(reviews);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
 }

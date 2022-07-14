@@ -8,6 +8,20 @@
     tools:context=".restaurant.RestaurantActivity">
 
     <TextView
+        android:id="@+id/tvRestaurantName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Live Now"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.003"
+        app:layout_constraintStart_toStartOf="@+id/ivPhone"
+        app:layout_constraintTop_toBottomOf="@+id/tvPhoneNumber" />
+
+    <TextView
         android:id="@+id/tvRestaurantName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -142,10 +156,11 @@
         android:id="@+id/rvReviews"
         android:layout_width="373dp"
         android:layout_height="274dp"
-        android:layout_marginTop="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPhoneNumber" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvRestaurantName2"
+        app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName2"
+        app:layout_constraintVertical_bias="0.27" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

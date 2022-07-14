@@ -20,31 +20,31 @@ import java.util.Date;
 import java.util.List;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
-        public static final String TAG = "PostsAdapter";
+        public static final String TAG = "ReviewsAdapter";
 
         private WeakReference<Context> context;
-        private List<Review> review;
+        private List<Review> reviews;
 
-    public ReviewsAdapter(Context context, List<Review> review) {
+    public ReviewsAdapter(Context context, List<Review> reviews) {
             this.context = new WeakReference<Context>(context);
-            this.review = review;
+            this.reviews = reviews;
         }
 
         // Clean all elements of the recycler
         public void clear() {
-            review.clear();
+            reviews.clear();
             notifyDataSetChanged();
         }
 
         // Add a list of items -- change to type used
         public void addAll(List<Review> list) {
-            review.addAll(list);
+            reviews.addAll(list);
             notifyDataSetChanged();
         }
 
         @Override
         public int getItemCount() {
-            return review.size();
+            return reviews.size();
         }
 
         @NonNull
@@ -83,6 +83,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 tvUsername.setText(review.getUser().getUsername());
                 Date createdAt = review.getCreatedAt();
                 tvTimestamp.setText(review.calculateTimeAgo(createdAt));
+                tvReview.setText(review.getReview());
 
                 ParseFile profilePic = review.getUser().getParseFile("profilePic");
                 if (profilePic != null) {
