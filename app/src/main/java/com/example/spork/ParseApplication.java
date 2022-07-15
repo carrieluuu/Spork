@@ -18,11 +18,13 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Review.class);
 
+
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(BuildConfig.PARSE_APPLICATION_ID)
                 .clientKey(BuildConfig.PARSE_CLIENT_KEY)
                 .server(BuildConfig.PARSE_SERVER)
                 .build()
         );
+
     }
 }

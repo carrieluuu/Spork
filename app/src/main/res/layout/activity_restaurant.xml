@@ -68,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.157"
+        app:layout_constraintVertical_bias="0.171"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -154,13 +154,25 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReviews"
-        android:layout_width="373dp"
-        android:layout_height="274dp"
+        android:layout_width="377dp"
+        android:layout_height="214dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvRestaurantName2"
         app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName2"
-        app:layout_constraintVertical_bias="0.27" />
+        app:layout_constraintVertical_bias="0.179" />
+
+    <Button
+        android:id="@+id/btnAddReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_review"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

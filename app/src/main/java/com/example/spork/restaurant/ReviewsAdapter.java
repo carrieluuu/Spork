@@ -42,6 +42,12 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             notifyDataSetChanged();
         }
 
+        public void add(Review review) {
+            reviews.add(review);
+            notifyDataSetChanged();
+
+        }
+
         @Override
         public int getItemCount() {
             return reviews.size();
