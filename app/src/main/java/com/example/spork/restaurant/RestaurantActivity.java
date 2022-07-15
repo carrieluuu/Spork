@@ -41,6 +41,8 @@ import com.parse.livequery.SubscriptionHandling;
 import org.parceler.Parcels;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,16 +111,38 @@ public class RestaurantActivity extends AppCompatActivity {
         rvReviews.setAdapter(adapter);
         // set the layout manager on the recycler view
         rvReviews.setLayoutManager(new LinearLayoutManager(this));
-
-        queryReviews();
         addReview();
         setUpLiveQuery();
 
     }
 
-    protected void queryReviews() {
-        ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
-        query.include(Review.KEY_USER)
+    private void setUpLiveQuery() {
+        String websocketUrl = "wss://spork.b4a.io/";
+
+        ParseLiveQueryClient parseLiveQueryClient = null;
+        try {
+            parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(websocketUrl));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+
+
+        ParseQuery<Review> queryReview = ParseQuery.getQuery(Review.class).whereEqualTo("restaurantId", restaurant.getYelpId());
+
+        SubscriptionHandling<Review> subscriptionHandling = parseLiveQueryClient.subscribe(queryReview);
+
+        subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.notifyDataSetChanged();
+                    rvReviews.scrollToPosition(0);
+                }
+            });
+        });
+
+        queryReview.include(Review.KEY_USER)
                 .whereEqualTo("restaurantId", restaurant.getYelpId())
                 .addDescendingOrder("createdAt")
                 .findInBackground(new FindCallback<Review>() {
@@ -138,33 +162,6 @@ public class RestaurantActivity extends AppCompatActivity {
                         // save received posts to list and notify adapter of new data
                         allReviews.addAll(reviews);
                         adapter.notifyDataSetChanged();
-                    }
-                });
-    }
-
-    private void setUpLiveQuery() {
-        ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient();
-
-        ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
-
-        // Connect to Parse server
-        SubscriptionHandling<Review> subscriptionHandling = parseLiveQueryClient.subscribe(query);
-
-        // Listen for CREATE events
-        subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, new
-                SubscriptionHandling.HandleEventCallback<Review>() {
-                    @Override
-                    public void onEvent(ParseQuery<Review> query, Review review) {
-
-                        Handler handler = new Handler(Looper.getMainLooper());
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.notifyDataSetChanged();
-                                rvReviews.scrollToPosition(0);
-                            }
-
-                        });
                     }
                 });
     }
@@ -224,9 +221,8 @@ public class RestaurantActivity extends AppCompatActivity {
                 Log.i(TAG, "Post save was successful");
             }
         });
-        allReviews.add(review);
-        adapter.notifyDataSetChanged();
+        allReviews.add(0, review);
+        adapter.notifyItemInserted(0);
     }
-
 
 }
