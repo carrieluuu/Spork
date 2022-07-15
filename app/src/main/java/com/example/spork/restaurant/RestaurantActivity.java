@@ -112,6 +112,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         queryReviews();
         addReview();
+        setUpLiveQuery();
 
     }
 
@@ -141,7 +142,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 });
     }
 
-    private void updateReviews() {
+    private void setUpLiveQuery() {
         ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient();
 
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
@@ -225,7 +226,6 @@ public class RestaurantActivity extends AppCompatActivity {
         });
         allReviews.add(review);
         adapter.notifyDataSetChanged();
-        updateReviews();
     }
 
 
