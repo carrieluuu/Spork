@@ -8,8 +8,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.text.Html;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
@@ -27,11 +25,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.R;
 import com.example.spork.Restaurant;
-import com.example.spork.feed.ComposeFragment;
-import com.example.spork.feed.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -40,8 +35,6 @@ import com.parse.livequery.SubscriptionHandling;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.parceler.Parcels;
-
-import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -178,12 +171,21 @@ public class RestaurantActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantActivity.this);
                 builder.setTitle("What do you think of " + restaurant.getName() + "?");
 
+                String[] ratings =  {"Loved it" + ("\ud83d\ude0d"), "Ok " + ("\ud83d\ude2c") , "Didn't like it " + ("\ud83d\ude14")};
+                builder.setSingleChoiceItems(ratings, -1, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Selected rating = "+ ratings[which], Toast.LENGTH_SHORT).show();
+                                restaurant.setPopularity(restaurant.getPopularity() + (double)((which + 3)/3) * 0.5);
+                            }
+                        });
+
                 // Set up the input
                 final EditText etReview = new EditText(RestaurantActivity.this);
                 etReview.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(etReview);
 
-                // Set up the buttons
+                // Set up the confirm and cancel buttons
                 builder.setPositiveButton("Post", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
