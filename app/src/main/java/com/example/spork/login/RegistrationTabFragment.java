@@ -15,8 +15,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.spork.MainActivity;
 import com.example.spork.R;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class RegistrationTabFragment extends Fragment {
@@ -37,7 +35,7 @@ public class RegistrationTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.registration_tab_fragment, container, false);
 
-        tvName = root.findViewById(R.id.tvName);
+        tvName = root.findViewById(R.id.tvFullName);
         etName = root.findViewById(R.id.etName);
         tvUsername = root.findViewById(R.id.tvUsername);
         etUsername = root.findViewById(R.id.etUsername);
