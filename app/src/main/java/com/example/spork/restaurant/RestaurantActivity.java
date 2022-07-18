@@ -38,12 +38,15 @@ import com.parse.SaveCallback;
 import com.parse.livequery.ParseLiveQueryClient;
 import com.parse.livequery.SubscriptionHandling;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.parceler.Parcels;
 
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class RestaurantActivity extends AppCompatActivity {
@@ -145,6 +148,7 @@ public class RestaurantActivity extends AppCompatActivity {
         queryReview.include(Review.KEY_USER)
                 .whereEqualTo("restaurantId", restaurant.getYelpId())
                 .addDescendingOrder("createdAt")
+                .whereGreaterThanOrEqualTo("createdAt", DateUtils.truncate(new Date(), Calendar.DATE))
                 .findInBackground(new FindCallback<Review>() {
                     @Override
                     public void done(List<Review> reviews, ParseException e) {
@@ -156,7 +160,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
                         // for debugging purposes let's print every review username to logcat
                         for (Review review : reviews) {
-                            Log.i(TAG, "Review by username: " + review.getUser().getUsername());
+                            Log.i(TAG, "Review by username: " + review.getUser().getUsername() + review.getCreatedAt());
                         }
 
                         // save received posts to list and notify adapter of new data

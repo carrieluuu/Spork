@@ -13,6 +13,7 @@ public class Review extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_REVIEW = "review";
     public static final String KEY_RESTAURANTID = "restaurantId";
+    public static final String TAG = "Review";
 
 
     public ParseUser getUser() {
