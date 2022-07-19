@@ -12,7 +12,6 @@ import java.util.List;
 
 public class RecommendationScore {
     public static final String TAG = "RecommendationScore";
-    public static final int PRICE_SCALE = 4;
     public static final int RATING_SCALE = 5;
     public static final int POPULARITY_SCALE = 5;
     public static final int PROXIMITY_SCALE = 5;

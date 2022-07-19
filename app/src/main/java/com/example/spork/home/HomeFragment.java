@@ -63,7 +63,6 @@ public class HomeFragment extends Fragment {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient client;
-    private SearchView svMap;
     private ImageView ivProfilePic;
     private FloatingActionButton fabZoomIn;
     private FloatingActionButton fabZoomOut;
@@ -94,7 +93,6 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        svMap = view.findViewById(R.id.svMap);
         ivProfilePic = view.findViewById(R.id.ivProfilePic);
         fabZoomIn = view.findViewById(R.id.fabZoomIn);
         fabZoomOut = view.findViewById(R.id.fabZoomOut);
