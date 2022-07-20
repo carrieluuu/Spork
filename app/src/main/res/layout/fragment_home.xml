@@ -18,7 +18,8 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <HorizontalScrollView
-        android:layout_width="353dp"
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="337dp"
         android:layout_height="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ivProfilePic"
@@ -28,6 +29,7 @@
         app:layout_constraintVertical_bias="0.023">
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:singleLine="true">
@@ -41,7 +43,9 @@
                 android:layout_marginTop="8dp"
                 android:checkable="true"
                 android:text="Open Now"
+                android:textColor="@color/blue_700"
                 android:theme="@style/Theme.MaterialComponents.Light"
+                app:chipBackgroundColor="@color/blue_300"
                 app:chipIcon="@drawable/ic_hours"
                 app:closeIconVisible="false" />
 
@@ -54,7 +58,9 @@
                 android:layout_marginTop="8dp"
                 android:checkable="true"
                 android:text="Affordable"
+                android:textColor="@color/blue_700"
                 android:theme="@style/Theme.MaterialComponents.Light"
+                app:chipBackgroundColor="@color/blue_300"
                 app:chipIcon="@drawable/ic_price"
                 app:closeIconVisible="false" />
 
@@ -67,7 +73,9 @@
                 android:layout_marginTop="8dp"
                 android:checkable="true"
                 android:text="Top-Rated"
+                android:textColor="@color/blue_700"
                 android:theme="@style/Theme.MaterialComponents.Light"
+                app:chipBackgroundColor="@color/blue_300"
                 app:chipIcon="@drawable/ic_star"
                 app:closeIconVisible="false" />
 
@@ -80,7 +88,9 @@
                 android:layout_marginTop="8dp"
                 android:checkable="true"
                 android:text="Popular"
+                android:textColor="@color/blue_700"
                 android:theme="@style/Theme.MaterialComponents.Light"
+                app:chipBackgroundColor="@color/blue_300"
                 app:chipIcon="@drawable/ic_smile"
                 app:closeIconVisible="false" />
 
@@ -93,21 +103,13 @@
                 android:layout_marginTop="8dp"
                 android:checkable="true"
                 android:text="Closest"
+                android:textColor="@color/blue_700"
                 android:theme="@style/Theme.MaterialComponents.Light"
+                app:chipBackgroundColor="@color/blue_300"
                 app:chipIcon="@drawable/ic_post_location"
                 app:closeIconVisible="false" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
-
-    <ImageView
-        android:id="@+id/ivProfilePic"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.033"
-        tools:src="@tools:sample/avatars" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabZoomIn"
