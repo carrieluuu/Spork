@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Create a new PlacesClient instance
         PlacesClient placesClient = Places.createClient(this);
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (item.getItemId()) {
                     case R.id.action_home:
-                        fragment = new HomeFragment();
+                        fragment = fragmentManager.findFragmentById(R.id.action_home);
+                        if (fragment == null)
+                            fragment = new HomeFragment();
                         break;
                     case R.id.action_search:
                         fragment = new SearchFragment();

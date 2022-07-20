@@ -25,12 +25,13 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
     private String googleNearbyRestaurantsData;
     private GoogleMap googleMap;
     private String url;
+    private  double[] tempPrefs;
     private List<Restaurant> restaurantList;
     private String nextPageToken;
 
     @Override
     protected void onPostExecute(String s) {
-        RecommendationScore rs = new RecommendationScore(restaurantList);
+        RecommendationScore rs = new RecommendationScore(restaurantList, tempPrefs);
         Log.i(TAG, "List size: " + restaurantList.size());
         restaurantList = rs.sortList(restaurantList);
 
@@ -56,6 +57,7 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
 
             googleMap = (GoogleMap) objects[0];
             url = (String) objects[1];
+            tempPrefs = (double[]) objects[2];
             restaurantList = new ArrayList<>();
 
             DownloadUrl downloadUrl = new DownloadUrl();

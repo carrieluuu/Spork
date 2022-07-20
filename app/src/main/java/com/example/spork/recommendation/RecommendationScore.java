@@ -5,6 +5,9 @@ import com.example.spork.onboarding.OnboardingFragment1;
 import com.example.spork.onboarding.OnboardingFragment2;
 import com.example.spork.onboarding.OnboardingFragment3;
 import com.example.spork.onboarding.OnboardingFragment4;
+import com.parse.ParseUser;
+
+import org.json.JSONException;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,7 +15,6 @@ import java.util.List;
 
 public class RecommendationScore {
     public static final String TAG = "RecommendationScore";
-    public static final int PRICE_SCALE = 4;
     public static final int RATING_SCALE = 5;
     public static final int POPULARITY_SCALE = 5;
     public static final int PROXIMITY_SCALE = 5;
@@ -31,8 +33,15 @@ public class RecommendationScore {
     private double proximityScore;
     private double totalScore;
 
-    public RecommendationScore(List<Restaurant> restaurantList) {
+    public RecommendationScore(List<Restaurant> restaurantList, double[] prefs) {
         this.restaurantList = restaurantList;
+
+        // update
+        priceWeight = prefs[0];
+        ratingWeight = prefs[1];
+        popularityWeight = prefs[2];
+        proximityWeight = prefs[3];
+
         standardizePopularity();
         standardizeProximity();
         
@@ -81,6 +90,7 @@ public class RecommendationScore {
     }
 
     public void calculateScore(Restaurant restaurant) {
+
         switch(restaurant.getPrice()) {
             case 0:
             case 1:
