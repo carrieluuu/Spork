@@ -30,10 +30,11 @@ import java.lang.ref.WeakReference;
 
 public class FetchYelpData extends AsyncTask<Object, String, String> {
 
-    private static final String TAG = "BusinessSearchYelp";
+    private static final String TAG = "FetchYelpData";
 
     private WeakReference<Context> context;
     private String url;
+    private String id;
     private String businessSearchYelpData;
     private String businessDetailsYelpData;
     private Restaurant restaurant;
@@ -57,18 +58,22 @@ public class FetchYelpData extends AsyncTask<Object, String, String> {
     protected String doInBackground(Object... objects) {
 
         url = (String) objects[0];
+        id = (String) objects[1];
+
 
         YelpService yelpService = new YelpService();
 
         try {
 
-            // get id from business search
-            businessSearchYelpData = yelpService.getRequest(url);
-            JSONObject businessSearchJSON = new JSONObject(businessSearchYelpData);
+            if (id == null) {
+                // get id from business search
+                businessSearchYelpData = yelpService.getRequest(url);
+                JSONObject businessSearchJSON = new JSONObject(businessSearchYelpData);
 
-            JSONArray businessesJSON = businessSearchJSON.getJSONArray("businesses");
-            String id = businessesJSON.getJSONObject(0).getString("id");
-            Log.i(TAG, "id: " + id);
+                JSONArray businessesJSON = businessSearchJSON.getJSONArray("businesses");
+                String id = businessesJSON.getJSONObject(0).getString("id");
+                Log.i(TAG, "id: " + id);
+            }
 
             // get business details using acquired id
             url = "https://api.yelp.com/v3/businesses/" + id;

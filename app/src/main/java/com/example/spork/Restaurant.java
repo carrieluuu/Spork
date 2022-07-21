@@ -26,6 +26,8 @@ public class Restaurant {
     private String image;
     private String website;
     private String phone;
+    private String yelpPrice;
+    private String feature;
 
     public Restaurant() {
 
@@ -50,6 +52,15 @@ public class Restaurant {
         rating = stars;
         website = websiteUrl;
         phone = phoneNumber;
+
+    }
+
+    public Restaurant(String id, String restaurantName, String imageUrl, String category, String price) {
+        yelpId = id;
+        name = restaurantName;
+        image = imageUrl;
+        feature = category;
+        yelpPrice = price;
 
     }
 
@@ -133,4 +144,13 @@ public class Restaurant {
     public String getPhone() {
         return phone;
     }
+
+    public String getFeature() {
+        return feature;
+    }
+
+    public String getYelpPrice() {
+        return yelpPrice;
+    }
+
 }
