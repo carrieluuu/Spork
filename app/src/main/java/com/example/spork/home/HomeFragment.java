@@ -193,8 +193,9 @@ public class HomeFragment extends Fragment {
                     Log.i(TAG, "Business search url: "+ businessSearchUrl);
 
                     Restaurant restaurant = new Restaurant();
-                    Object yelpData[] = new Object[1];
+                    Object yelpData[] = new Object[2];
                     yelpData[0] = businessSearchUrl;
+                    yelpData[1] = null;
 
                     FetchYelpData fetchYelpData  = new FetchYelpData(getContext());
                     fetchYelpData.execute(yelpData);

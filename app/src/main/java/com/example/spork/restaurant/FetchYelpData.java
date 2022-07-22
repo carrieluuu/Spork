@@ -71,7 +71,7 @@ public class FetchYelpData extends AsyncTask<Object, String, String> {
                 JSONObject businessSearchJSON = new JSONObject(businessSearchYelpData);
 
                 JSONArray businessesJSON = businessSearchJSON.getJSONArray("businesses");
-                String id = businessesJSON.getJSONObject(0).getString("id");
+                id = businessesJSON.getJSONObject(0).getString("id");
                 Log.i(TAG, "id: " + id);
             }
 
