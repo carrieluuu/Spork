@@ -51,13 +51,13 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvUsername"
-            android:layout_alignBottom="@id/ivLocation"
-            android:layout_toEndOf="@+id/ivLocation"
+            android:layout_alignBottom="@id/ivAddress"
+            android:layout_toEndOf="@+id/ivAddress"
             android:textColor="@color/blue_700"
             tools:text="location" />
 
         <ImageView
-            android:id="@+id/ivLocation"
+            android:id="@+id/ivAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvUsername"

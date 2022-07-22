@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,7 +28,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.BuildConfig;
 import com.example.spork.R;
-import com.example.spork.login.LoginActivity;
+import com.example.spork.Restaurant;
+import com.example.spork.restaurant.FetchYelpData;
+import com.example.spork.restaurant.RestaurantActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -41,12 +42,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,7 +71,7 @@ public class HomeFragment extends Fragment {
     private double currentLat;
     private double currentLng;
     private String url;
-    private int radius = 1000;
+    private int radius = 5000;
     private int zoom = 15;
     private boolean zoomIn = false;
     private boolean zoomOut = false;
@@ -171,6 +176,32 @@ public class HomeFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
+
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+
+                    // send data to business search data [connect places api to yelp api]
+                    StringBuilder sb = new StringBuilder("https://api.yelp.com/v3/businesses/search?");
+                    sb.append("term=" + marker.getTitle());
+                    sb.append("&latitude=" + marker.getPosition().latitude);
+                    sb.append("&longitude=" + marker.getPosition().longitude);
+                    sb.append("&limit=1");
+
+                    String businessSearchUrl = sb.toString();
+
+                    Log.i(TAG, "Business search url: "+ businessSearchUrl);
+
+                    Restaurant restaurant = new Restaurant();
+                    Object yelpData[] = new Object[1];
+                    yelpData[0] = businessSearchUrl;
+
+                    FetchYelpData fetchYelpData  = new FetchYelpData(getContext());
+                    fetchYelpData.execute(yelpData);
+
+                    return false;
+                }
+            });
 
         }
     };
@@ -282,6 +313,14 @@ public class HomeFragment extends Fragment {
                                         Looper.myLooper());
                             }
 
+                            ParseGeoPoint currentLocation = new ParseGeoPoint(currentLat, currentLng);
+                            ParseUser.getCurrentUser().put("currentLocation", currentLocation);
+
+                            LatLng currentLatLng = new LatLng(currentLat, currentLng);
+                            Log.i(TAG, "currentLat: " + currentLat + " currentLng: " + currentLng);
+                            mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
+
                             StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
                             sb.append("?fields=name%2Cgeometry/location");
                             sb.append("&location=" + currentLat + "%2C" + currentLng);
@@ -292,18 +331,13 @@ public class HomeFragment extends Fragment {
                             url = sb.toString();
                             Log.i(TAG, url);
 
-                            LatLng currentLatLng = new LatLng(currentLat, currentLng);
-                            Log.i(TAG, "currentLat: " + currentLat + " currentLng: " + currentLng);
-                            mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
-                           mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
-
                             // fetch data from json to add nearby restaurants onto the map
-                            Object dataFetch[] = new Object[2];
-                            dataFetch[0] = mMap;
-                            dataFetch[1] = url;
+                            Object dataFetchPlaces[] = new Object[2];
+                            dataFetchPlaces[0] = mMap;
+                            dataFetchPlaces[1] = url;
 
-                            FetchData fetchData  = new FetchData();
-                            fetchData.execute(dataFetch);
+                            FetchPlacesData fetchPlacesData  = new FetchPlacesData();
+                            fetchPlacesData.execute(dataFetchPlaces);
 
                             if (zoomIn) {
                                 mMap.clear();
@@ -329,6 +363,7 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
 
 
 }

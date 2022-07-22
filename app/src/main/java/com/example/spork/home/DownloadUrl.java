@@ -2,6 +2,8 @@ package com.example.spork.home;
 
 import android.util.Log;
 
+import com.example.spork.BuildConfig;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +14,7 @@ import java.net.URL;
 public class DownloadUrl {
     public static final String TAG = "DownloadUrl";
 
-    public String retrieveUrl(String url) throws IOException {
+    public String retrievePlacesUrl(String url) throws IOException {
 
         String urlData = "";
         HttpURLConnection httpURLConnection = null;
@@ -43,4 +45,5 @@ public class DownloadUrl {
         }
         return urlData;
     }
+
 }
