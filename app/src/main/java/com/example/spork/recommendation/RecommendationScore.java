@@ -58,14 +58,15 @@ public class RecommendationScore {
 
     public void standardizePopularity() {
         double[] popularity = new double[restaurantList.size()];
+        double[] standardizedReviews = new double[restaurantList.size()];
         for (int i = 0; i < restaurantList.size(); i++) {
             popularity[i] = restaurantList.get(i).getReviews();
         }
         ZScore zscore = new ZScore();
-        popularity = zscore.compute(popularity);
+        standardizedReviews = zscore.compute(popularity);
 
         for (int i = 0; i < restaurantList.size(); i++) {
-            restaurantList.get(i).setPopularity(popularity[i]);
+            restaurantList.get(i).setPopularity(standardizedReviews[i]);
         }
     }
 
