@@ -196,6 +196,8 @@ public class HomeFragment extends Fragment {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom -=1));
             }
 
+            mMap.getUiSettings().setMapToolbarEnabled(false);
+
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
