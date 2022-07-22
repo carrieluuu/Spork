@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Looper;
 import android.provider.Settings;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.BuildConfig;
+import com.example.spork.FileUtils;
 import com.example.spork.R;
 import com.example.spork.Restaurant;
 import com.example.spork.restaurant.FetchYelpData;
@@ -51,7 +54,8 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Home Fragment class to display map with markers connecting the user to the recommended restaurant pages.
+ * Users can also explore the map by dragging or change the zoom-in/zoom-out by pinching or double tapping.
  */
 public class HomeFragment extends Fragment {
 
@@ -62,7 +66,7 @@ public class HomeFragment extends Fragment {
     private GoogleMap mMap;
     private FusedLocationProviderClient client;
     private SearchView svMap;
-    private ImageView ivProfile;
+    private ImageView ivProfilePic;
     private FloatingActionButton fabZoomIn;
     private FloatingActionButton fabZoomOut;
     private double currentLat;
@@ -93,7 +97,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         svMap = view.findViewById(R.id.svMap);
-        ivProfile = view.findViewById(R.id.ivProfile);
+        ivProfilePic = view.findViewById(R.id.ivProfilePic);
         fabZoomIn = view.findViewById(R.id.fabZoomIn);
         fabZoomOut = view.findViewById(R.id.fabZoomOut);
 
@@ -102,7 +106,7 @@ public class HomeFragment extends Fragment {
             Glide.with(this)
                     .load(profilePic.getUrl())
                     .apply(RequestOptions.circleCropTransform())
-                    .into(ivProfile);
+                    .into(ivProfilePic);
         }
 
         fabZoomIn.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +115,7 @@ public class HomeFragment extends Fragment {
                 radius -= 1000;
                 zoomIn = true;
                 zoomOut = false;
-                populateMap();
+                getCurrentLocation();
             }
         });
 
@@ -126,17 +130,11 @@ public class HomeFragment extends Fragment {
                     zoomIn = false;
                     zoomOut = true;
                 }
-                populateMap();
+                getCurrentLocation();
             }
         });
 
         client = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
-        }
 
         // check condition
         if (ContextCompat.checkSelfPermission(
@@ -153,7 +151,7 @@ public class HomeFragment extends Fragment {
                 .PERMISSION_GRANTED) {
             // When permission is granted
             // Call method
-            populateMap();
+            getCurrentLocation();
         } else {
             // When permission is not granted
             // Call method
@@ -174,7 +172,29 @@ public class HomeFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
 
+            LatLng currentLatLng = new LatLng(currentLat, currentLng);
+            mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
 
+            url = FileUtils.buildPlacesUrl(currentLat, currentLng, radius);
+            Log.i(TAG, url);
+
+            // fetch data from json to add nearby restaurants onto the map
+            Object dataFetchPlaces[] = new Object[2];
+            dataFetchPlaces[0] = mMap;
+            dataFetchPlaces[1] = url;
+
+            FetchPlacesData fetchPlacesData  = new FetchPlacesData();
+            fetchPlacesData.execute(dataFetchPlaces);
+
+            if (zoomIn) {
+                mMap.clear();
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom +=1));
+            }
+            if (zoomOut) {
+                mMap.clear();
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom -=1));
+            }
 
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
@@ -218,7 +238,7 @@ public class HomeFragment extends Fragment {
                 == PackageManager.PERMISSION_GRANTED)) {
             // When permission are granted
             // Call  method
-            populateMap();
+            getCurrentLocation();
         }
         else {
             // When permission are denied
@@ -232,7 +252,7 @@ public class HomeFragment extends Fragment {
     }
 
     @SuppressLint("MissingPermission")
-    private void populateMap()
+    private void getCurrentLocation()
     {
         // Initialize Location manager
         LocationManager locationManager
@@ -323,34 +343,10 @@ public class HomeFragment extends Fragment {
                             LatLng currentLatLng = new LatLng(currentLat, currentLng);
                             Log.i(TAG, "currentLat: " + currentLat + " currentLng: " + currentLng);
 
-                            mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
-
-                            StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
-                            sb.append("?fields=name%2Cgeometry/location");
-                            sb.append("&location=" + currentLat + "%2C" + currentLng);
-                            sb.append("&radius=" + radius);
-                            sb.append("&type=restaurant");
-                            sb.append("&key=" + BuildConfig.MAPS_API_KEY);
-
-                            url = sb.toString();
-                            Log.i(TAG, url);
-
-                            // fetch data from json to add nearby restaurants onto the map
-                            Object dataFetchPlaces[] = new Object[2];
-                            dataFetchPlaces[0] = mMap;
-                            dataFetchPlaces[1] = url;
-
-                            FetchPlacesData fetchPlacesData  = new FetchPlacesData();
-                            fetchPlacesData.execute(dataFetchPlaces);
-
-                            if (zoomIn) {
-                                mMap.clear();
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom +=1));
-                            }
-                            if (zoomOut) {
-                                mMap.clear();
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom -=1));
+                            SupportMapFragment mapFragment =
+                                    (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+                            if (mapFragment != null) {
+                                mapFragment.getMapAsync(callback);
                             }
                         }
                     });

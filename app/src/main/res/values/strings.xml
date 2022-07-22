@@ -7,4 +7,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="website">Visit the restaurant</string>
     <string name="add_review">Add Review</string>
+    <string name="loved_it">Loved it 😍</string>
+    <string name="okay">Ok 😬</string>
+    <string name="dislike">Disliked it 😔</string>
 </resources>

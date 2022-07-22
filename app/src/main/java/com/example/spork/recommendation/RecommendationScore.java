@@ -5,6 +5,8 @@ import com.example.spork.onboarding.OnboardingFragment1;
 import com.example.spork.onboarding.OnboardingFragment2;
 import com.example.spork.onboarding.OnboardingFragment3;
 import com.example.spork.onboarding.OnboardingFragment4;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -55,28 +57,31 @@ public class RecommendationScore {
     }
 
     public void standardizePopularity() {
-        double[] popularity = new double[restaurantList.size()];
+        double[] reviews = new double[restaurantList.size()];
+        double[] standardizedReviews = new double[];
         for (int i = 0; i < restaurantList.size(); i++) {
-            popularity[i] = restaurantList.get(i).getReviews();
+            reviews[i] = restaurantList.get(i).getReviews();
         }
         ZScore zscore = new ZScore();
-        popularity = zscore.compute(popularity);
+        standardizedReviews = zscore.compute(reviews);
 
         for (int i = 0; i < restaurantList.size(); i++) {
-            restaurantList.get(i).setPopularity(popularity[i]);
+            restaurantList.get(i).setPopularity(standardizedReviews[i]);
         }
     }
 
     public void standardizeProximity() {
         double[] distance = new double[restaurantList.size()];
+        double[] standardizedDistance = new double[];
+        ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint("currentLocation");
         for (int i = 0; i < restaurantList.size(); i++) {
-            distance[i] = restaurantList.get(i).getDistance();
+            distance[i] = restaurantList.get(i).getDistance(currentLocation);
         }
         ZScore zscore = new ZScore();
-        distance = zscore.compute(distance);
+        standardizedDistance = zscore.compute(distance);
 
         for (int i = 0; i < restaurantList.size(); i++) {
-            restaurantList.get(i).setProximity(distance[i]);
+            restaurantList.get(i).setProximity(standardizedDistance[i]);
         }
     }
 
