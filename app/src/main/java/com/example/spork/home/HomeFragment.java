@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.BuildConfig;
+import com.example.spork.FileUtils;
 import com.example.spork.R;
 import com.example.spork.Restaurant;
 import com.example.spork.restaurant.FetchYelpData;
@@ -134,12 +135,6 @@ public class HomeFragment extends Fragment {
 
         client = LocationServices.getFusedLocationProviderClient(getActivity());
 
-//        SupportMapFragment mapFragment =
-//                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-//        if (mapFragment != null) {
-//            mapFragment.getMapAsync(callback);
-//        }
-
         // check condition
         if (ContextCompat.checkSelfPermission(
                 getActivity(),
@@ -180,14 +175,7 @@ public class HomeFragment extends Fragment {
             mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
 
-            StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
-            sb.append("?fields=name%2Cgeometry/location");
-            sb.append("&location=" + currentLat + "%2C" + currentLng);
-            sb.append("&radius=" + radius);
-            sb.append("&type=restaurant");
-            sb.append("&key=" + BuildConfig.MAPS_API_KEY);
-
-            url = sb.toString();
+            url = FileUtils.buildPlacesUrl(currentLat, currentLng, radius);
             Log.i(TAG, url);
 
             // fetch data from json to add nearby restaurants onto the map
