@@ -12,16 +12,16 @@
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_alignParentEnd="true"
+        android:paddingRight="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvRestaurantName"
-        app:layout_constraintVertical_bias="0.545"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvRestaurantName"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/ivRestaurantImage"
@@ -44,10 +44,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.43"
-        app:layout_constraintStart_toEndOf="@+id/tvRestaurantName"
+        app:layout_constraintHorizontal_bias="0.88"
+        app:layout_constraintStart_toEndOf="@+id/ivRestaurantImage"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintVertical_bias="0.156"
         tools:text="$$" />
 
     <com.google.android.material.chip.Chip

@@ -1,6 +1,8 @@
 package com.example.spork.search;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.R;
 import com.example.spork.Restaurant;
+import com.example.spork.restaurant.FetchYelpData;
 import com.google.android.material.chip.Chip;
+
+import org.parceler.Parcels;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -61,7 +66,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         return restaurants.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView ivRestaurantImage;
         private TextView tvRestaurantName;
@@ -75,6 +80,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             tvRestaurantName = itemView.findViewById(R.id.tvRestaurantName);
             tvPriceLevel = itemView.findViewById(R.id.tvPriceLevel);
             chipFeature = itemView.findViewById(R.id.chipFeature);
+            itemView.setOnClickListener(this);
 
         }
 
@@ -92,6 +98,22 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             tvPriceLevel.setText(restaurant.getYelpPrice());
             chipFeature.setText(restaurant.getFeature());
 
+        }
+
+        public void onClick(View v) {
+            // gets item position
+            int position = getAdapterPosition();
+            // make sure the position is valid, i.e. actually exists in the view
+            if (position != RecyclerView.NO_POSITION) {
+                Restaurant restaurant = restaurants.get(position);
+
+                Object yelpData[] = new Object[2];
+                yelpData[0] = null;
+                yelpData[1] = restaurant.getYelpId();
+
+                FetchYelpData fetchYelpData  = new FetchYelpData(context.get());
+                fetchYelpData.execute(yelpData);
+            }
         }
 
     }

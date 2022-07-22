@@ -78,6 +78,9 @@ public class YelpBusinessSearch extends AsyncTask<Object, String, String> {
                 JSONArray categories = restaurantObject.getJSONArray("categories");
                 String category = categories.getJSONObject(0).getString("title");
 
+                if (!restaurantObject.has("price"))
+                    continue;
+
                 String price = restaurantObject.getString("price");
 
                 restaurant = new Restaurant(id, name, image_url, category, price);
