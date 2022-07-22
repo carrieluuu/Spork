@@ -5,6 +5,8 @@ import com.example.spork.onboarding.OnboardingFragment1;
 import com.example.spork.onboarding.OnboardingFragment2;
 import com.example.spork.onboarding.OnboardingFragment3;
 import com.example.spork.onboarding.OnboardingFragment4;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -69,8 +71,9 @@ public class RecommendationScore {
 
     public void standardizeProximity() {
         double[] distance = new double[restaurantList.size()];
+        ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint("currentLocation");
         for (int i = 0; i < restaurantList.size(); i++) {
-            distance[i] = restaurantList.get(i).getDistance();
+            distance[i] = restaurantList.get(i).getDistance(currentLocation);
         }
         ZScore zscore = new ZScore();
         distance = zscore.compute(distance);

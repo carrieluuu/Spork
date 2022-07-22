@@ -41,9 +41,8 @@ public class Restaurant {
         return location;
     }
 
-    public double getDistance() {
+    public double getDistance(ParseGeoPoint currentLocation) {
         float[] result = new float[1];
-        ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint("currentLocation");
         Location.distanceBetween (currentLocation.getLatitude(), currentLocation.getLongitude(), location.latitude, location.longitude,  result);
         return result[0];
     }
