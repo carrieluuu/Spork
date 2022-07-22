@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.BuildConfig;
+import com.example.spork.FileUtils;
 import com.example.spork.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -48,7 +49,8 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Home Fragment class to display map with markers connecting the user to the recommended restaurant pages.
+ * Users can also explore the map by dragging or change the zoom-in/zoom-out by pinching or double tapping.
  */
 public class HomeFragment extends Fragment {
 
@@ -289,14 +291,7 @@ public class HomeFragment extends Fragment {
                             mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
 
-                            StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
-                            sb.append("?fields=name%2Cgeometry/location");
-                            sb.append("&location=" + currentLat + "%2C" + currentLng);
-                            sb.append("&radius=" + radius);
-                            sb.append("&type=restaurant");
-                            sb.append("&key=" + BuildConfig.MAPS_API_KEY);
-
-                            url = sb.toString();
+                            url = FileUtils.buildPlacesUrl(currentLat, currentLng, radius);
                             Log.i(TAG, url);
 
                             // fetch data from json to add nearby restaurants onto the map
