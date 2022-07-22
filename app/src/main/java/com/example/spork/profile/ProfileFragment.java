@@ -30,7 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Profile Fragment class to display user profile details such as friend count, post count,
+ * and all of their existing posts composed on the social feed fragment.
  */
 public class ProfileFragment extends Fragment {
 
