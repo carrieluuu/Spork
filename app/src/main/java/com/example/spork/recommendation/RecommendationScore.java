@@ -78,10 +78,10 @@ public class RecommendationScore {
             distance[i] = restaurantList.get(i).getDistance(currentLocation);
         }
         ZScore zscore = new ZScore();
-        distance = zscore.compute(distance);
+        standardizedDistance = zscore.compute(distance);
 
         for (int i = 0; i < restaurantList.size(); i++) {
-            restaurantList.get(i).setProximity(distance[i]);
+            restaurantList.get(i).setProximity(standardizedDistance[i]);
         }
     }
 
