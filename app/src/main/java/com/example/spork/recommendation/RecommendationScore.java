@@ -58,7 +58,7 @@ public class RecommendationScore {
 
     public void standardizePopularity() {
         double[] reviews = new double[restaurantList.size()];
-        double[] standardizedReviews = new double[];
+        double[] standardizedReviews;
         for (int i = 0; i < restaurantList.size(); i++) {
             reviews[i] = restaurantList.get(i).getReviews();
         }
@@ -72,7 +72,7 @@ public class RecommendationScore {
 
     public void standardizeProximity() {
         double[] distance = new double[restaurantList.size()];
-        double[] standardizedDistance = new double[];
+        double[] standardizedDistance;
         ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint("currentLocation");
         for (int i = 0; i < restaurantList.size(); i++) {
             distance[i] = restaurantList.get(i).getDistance(currentLocation);
