@@ -149,7 +149,7 @@ public class FeedFragment extends Fragment {
                             return;
                         }
 
-                        // for debugging purposes let's print every post description to logcat
+                        // for debugging purposes let's print every post username to logcat
                         for (Post post : posts) {
                             Log.i(TAG, "Post by username: " + post.getUser().getUsername());
                         }
