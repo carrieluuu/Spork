@@ -29,6 +29,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.BuildConfig;
 import com.example.spork.FileUtils;
 import com.example.spork.R;
+import com.example.spork.Restaurant;
+import com.example.spork.restaurant.FetchYelpData;
+import com.example.spork.restaurant.RestaurantActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -40,6 +43,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,6 +51,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 /**
  * Home Fragment class to display map with markers connecting the user to the recommended restaurant pages.
@@ -172,6 +178,32 @@ public class HomeFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
+
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+
+                    // send data to business search data [connect places api to yelp api]
+                    StringBuilder sb = new StringBuilder("https://api.yelp.com/v3/businesses/search?");
+                    sb.append("term=" + marker.getTitle());
+                    sb.append("&latitude=" + marker.getPosition().latitude);
+                    sb.append("&longitude=" + marker.getPosition().longitude);
+                    sb.append("&limit=1");
+
+                    String businessSearchUrl = sb.toString();
+
+                    Log.i(TAG, "Business search url: "+ businessSearchUrl);
+
+                    Restaurant restaurant = new Restaurant();
+                    Object yelpData[] = new Object[1];
+                    yelpData[0] = businessSearchUrl;
+
+                    FetchYelpData fetchYelpData  = new FetchYelpData(getContext());
+                    fetchYelpData.execute(yelpData);
+
+                    return false;
+                }
+            });
 
         }
     };
@@ -326,6 +358,7 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
 
 
 }
