@@ -29,9 +29,6 @@ public class BitmapScaler {
 
     // scale and don't keep aspect ratio
     public static Bitmap stretchToFill(Bitmap b, int width, int height) {
-        float factorH = height / (float) b.getHeight();
-        float factorW = width / (float) b.getWidth();
-        return Bitmap.createScaledBitmap(b, (int) (b.getWidth() * factorW),
-                (int) (b.getHeight() * factorH), true);
+        return Bitmap.createScaledBitmap(b, width, height, true);
     }
 }

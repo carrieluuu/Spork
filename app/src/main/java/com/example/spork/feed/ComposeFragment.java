@@ -53,6 +53,7 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
+ * ComposeFragment allows the user to launch the camera app, take a picture of their food/the restaurant, tag the location, and share to their social feed.
  */
 public class ComposeFragment extends Fragment {
     public static final String TAG = "ComposeFragment";

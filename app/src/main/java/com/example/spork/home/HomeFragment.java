@@ -54,7 +54,8 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Home Fragment class to display map with markers connecting the user to the recommended restaurant pages.
+ * Users can also explore the map by dragging or change the zoom-in/zoom-out by pinching or double tapping.
  */
 public class HomeFragment extends Fragment {
 
