@@ -9,6 +9,8 @@ import com.example.spork.recommendation.RecommendationScore;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +32,8 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        RecommendationScore rs = new RecommendationScore(restaurantList);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        RecommendationScore rs = new RecommendationScore(restaurantList, currentUser);
         Log.i(TAG, "List size: " + restaurantList.size());
         restaurantList = rs.sortList(restaurantList);
 
