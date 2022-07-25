@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Arrays;
 
 public class RestaurantActivity extends AppCompatActivity {
 
@@ -58,6 +60,8 @@ public class RestaurantActivity extends AppCompatActivity {
     private TextView tvPhoneNumber;
     private RecyclerView rvReviews;
     private Button btnAddReview;
+    private ImageButton btnBookmark;
+    private List<String> savedRestaurants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +75,9 @@ public class RestaurantActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.ratingBar);
         tvWebsite = findViewById(R.id.tvWebsite);
         tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
+        btnBookmark = findViewById(R.id.btnBookmark);
 
-        restaurant = (Restaurant) Parcels.unwrap(getIntent().getParcelableExtra("restaurant"));
+        restaurant = Parcels.unwrap(getIntent().getParcelableExtra("restaurant"));
 
         tvRestaurantName.setText(restaurant.getName());
         tvAddress.setText(restaurant.getAddress());
@@ -96,6 +101,25 @@ public class RestaurantActivity extends AppCompatActivity {
         tvWebsite.setText(Html.fromHtml(link, Html.FROM_HTML_MODE_COMPACT));
 
         tvPhoneNumber.setText(restaurant.getPhone());
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+
+        btnBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // if restaurant is already saved in bookmarks -> clicking the button will remove the restaurant from saved
+                if (currentUser.get("savedRestaurants") != null && currentUser.get("savedRestaurants").toString().contains(restaurant.getYelpId())) {
+                    btnBookmark.setImageResource(R.drawable.ic_bookmark_outline);
+                    currentUser.removeAll("savedRestaurants", Arrays.asList(restaurant.getYelpId()));
+                    currentUser.saveInBackground();
+                } else {
+                    btnBookmark.setImageResource(R.drawable.ic_bookmark_filled);
+                    currentUser.add("savedRestaurants", restaurant.getYelpId());
+                    currentUser.saveInBackground();
+                }
+
+            }
+        });
 
         rvReviews = findViewById(R.id.rvReviews);
         btnAddReview = findViewById(R.id.btnAddReview);
@@ -173,12 +197,12 @@ public class RestaurantActivity extends AppCompatActivity {
 
                 String[] ratings =  {"Loved it" + ("\ud83d\ude0d"), "Ok " + ("\ud83d\ude2c") , "Didn't like it " + ("\ud83d\ude14")};
                 builder.setSingleChoiceItems(ratings, -1, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getApplicationContext(),
-                                        "Selected rating = "+ ratings[which], Toast.LENGTH_SHORT).show();
-                                restaurant.setPopularity(restaurant.getPopularity() + (double)((which + 3)/3) * 0.5);
-                            }
-                        });
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(),
+                                "Selected rating = "+ ratings[which], Toast.LENGTH_SHORT).show();
+                        restaurant.setPopularity(restaurant.getPopularity() + (double)((which + 3)/3) * 0.5);
+                    }
+                });
 
                 // Set up the input
                 final EditText etReview = new EditText(RestaurantActivity.this);
