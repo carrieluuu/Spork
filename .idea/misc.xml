@@ -20,11 +20,12 @@
         <entry key="app/src/main/res/layout/activity_preferences.xml" value="0.34264780680338536" />
         <entry key="app/src/main/res/layout/activity_profile_fragment.xml" value="0.225" />
         <entry key="app/src/main/res/layout/activity_restaurant.xml" value="0.29846153846153844" />
+        <entry key="app/src/main/res/layout/activity_search_results.xml" value="0.1286231884057971" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2240458170572917" />
         <entry key="app/src/main/res/layout/dialog_review.xml" value="0.5245280832484149" />
         <entry key="app/src/main/res/layout/fragment_compose.xml" value="0.1852355072463768" />
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.225" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3003753662109375" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.40897216796875" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.20729166666666668" />
         <entry key="app/src/main/res/layout/fragment_onboarding1.xml" value="0.5563247680664063" />
         <entry key="app/src/main/res/layout/fragment_onboarding2.xml" value="0.4764801025390626" />
@@ -32,8 +33,10 @@
         <entry key="app/src/main/res/layout/fragment_onboarding4.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.29131874416185455" />
         <entry key="app/src/main/res/layout/fragment_restaurant.xml" value="0.47452952067057286" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.3174194505994926" />
         <entry key="app/src/main/res/layout/item_post.xml" value="0.3423873901367188" />
         <entry key="app/src/main/res/layout/item_review.xml" value="0.451244166277457" />
+        <entry key="app/src/main/res/layout/item_search_restaurant.xml" value="0.30864197530864196" />
         <entry key="app/src/main/res/layout/login_tab_fragment.xml" value="0.24572448730468757" />
         <entry key="app/src/main/res/layout/profile_feed_tab_fragment.xml" value="0.24322916666666666" />
         <entry key="app/src/main/res/layout/registration_tab_fragment.xml" value="0.27135467529296875" />

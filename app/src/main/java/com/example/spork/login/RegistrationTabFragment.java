@@ -91,7 +91,7 @@ public class RegistrationTabFragment extends Fragment {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG,"onClick login button");
+                Log.i(TAG,"onClick register button");
                 String fullName = etName.getText().toString();
                 String username = etUsername.getText().toString();
                 String email = etEmail.getText().toString();
@@ -116,7 +116,7 @@ public class RegistrationTabFragment extends Fragment {
         user.signUpInBackground(e -> {
             if (e == null) {
                 // Hooray! Let them use the app now.
-                goMainActivity();
+                goPreferencesActivity();
                 Toast.makeText(getContext(), "Sign up success!", Toast.LENGTH_SHORT).show();
             } else {
                 // Sign up didn't succeed. Look at the ParseException
@@ -129,8 +129,8 @@ public class RegistrationTabFragment extends Fragment {
     }
 
 
-    private void goMainActivity() {
-        Intent i = new Intent(getContext(), MainActivity.class);
+    private void goPreferencesActivity() {
+        Intent i = new Intent(getContext(), PreferencesActivity.class);
         startActivity(i);
     }
 }

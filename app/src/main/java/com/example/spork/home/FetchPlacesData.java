@@ -9,6 +9,8 @@ import com.example.spork.recommendation.RecommendationScore;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,12 +27,14 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
     private String googleNearbyRestaurantsData;
     private GoogleMap googleMap;
     private String url;
+    private  double[] tempPrefs;
     private List<Restaurant> restaurantList;
     private String nextPageToken;
 
     @Override
     protected void onPostExecute(String s) {
-        RecommendationScore rs = new RecommendationScore(restaurantList);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        RecommendationScore rs = new RecommendationScore(restaurantList, currentUser);
         Log.i(TAG, "List size: " + restaurantList.size());
         restaurantList = rs.sortList(restaurantList);
 
@@ -56,6 +60,7 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
 
             googleMap = (GoogleMap) objects[0];
             url = (String) objects[1];
+            tempPrefs = (double[]) objects[2];
             restaurantList = new ArrayList<>();
 
             DownloadUrl downloadUrl = new DownloadUrl();
