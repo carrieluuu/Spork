@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient client;
+    private ParseUser currentUser;
     private Chip chipOpenNow;
     private Chip chipPrice;
     private Chip chipTopRated;
@@ -118,6 +119,8 @@ public class HomeFragment extends Fragment {
         fabZoomIn = view.findViewById(R.id.fabZoomIn);
         fabZoomOut = view.findViewById(R.id.fabZoomOut);
 
+        currentUser = ParseUser.getCurrentUser();
+
         chipOpenNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,8 +138,8 @@ public class HomeFragment extends Fragment {
                     priceWeight = 0.25;
                 else
                     priceWeight = 0;
-
             }
+
         });
 
         chipTopRated.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +199,11 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        currentUser.put("priceWeight", priceWeight);
+        currentUser.put("ratingWeight", ratingWeight);
+        currentUser.put("popularityWeight", popularityWeight);
+        currentUser.put("proximityWeight", proximityWeight);
+
         client = LocationServices.getFusedLocationProviderClient(getActivity());
 
         // check condition
@@ -237,8 +245,6 @@ public class HomeFragment extends Fragment {
             LatLng currentLatLng = new LatLng(currentLat, currentLng);
             mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
-
-            double[] tempPrefs = new double[]{priceWeight, ratingWeight, popularityWeight, proximityWeight};
 
             StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
             sb.append("?fields=name%2Cgeometry/location");
@@ -410,7 +416,7 @@ public class HomeFragment extends Fragment {
                             }
 
                             ParseGeoPoint currentLocation = new ParseGeoPoint(currentLat, currentLng);
-                            ParseUser.getCurrentUser().put("currentLocation", currentLocation);
+                            currentUser.put("currentLocation", currentLocation);
 
                             if (currentLat == 0.0 || currentLng == 0.0) {
                                 currentLat = 37.484553142102676;

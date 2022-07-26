@@ -27,7 +27,6 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
     private String googleNearbyRestaurantsData;
     private GoogleMap googleMap;
     private String url;
-    private  double[] tempPrefs;
     private List<Restaurant> restaurantList;
     private String nextPageToken;
 
@@ -60,7 +59,6 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
 
             googleMap = (GoogleMap) objects[0];
             url = (String) objects[1];
-            tempPrefs = (double[]) objects[2];
             restaurantList = new ArrayList<>();
 
             DownloadUrl downloadUrl = new DownloadUrl();
