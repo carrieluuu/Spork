@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.spork.FileUtils;
 import com.example.spork.R;
 import com.example.spork.Restaurant;
 import com.example.spork.feed.Post;
@@ -43,6 +44,7 @@ public class SearchFragment extends Fragment {
 
     protected SearchAdapter adapter;
     protected List<Restaurant> featuredRestaurants;
+    private ParseUser currentUser;
     private TextView tvGreeting;
     private RecyclerView rvFeatured;
     private SearchView svRestaurant;
@@ -66,19 +68,15 @@ public class SearchFragment extends Fragment {
         rvFeatured = view.findViewById(R.id.rvFeatured);
         svRestaurant = view.findViewById(R.id.svRestaurant);
 
-        tvGreeting.setText("Hello, " + ParseUser.getCurrentUser().getString("fullName") + ".");
+        currentUser = ParseUser.getCurrentUser();
 
-        StringBuilder sb = new StringBuilder("https://api.yelp.com/v3/businesses/search?");
-        sb.append("term=restaurants");
-        sb.append("&latitude=" + ParseUser.getCurrentUser().getParseGeoPoint("currentLocation").getLatitude());
-        sb.append("&longitude=" + ParseUser.getCurrentUser().getParseGeoPoint("currentLocation").getLongitude());
-        sb.append("&sort_by=rating");
+        tvGreeting.setText("Hello, " + currentUser.getString("fullName") + ".");
 
-        String businessSearchUrl = sb.toString();
+        String featuredUrl = FileUtils.buildFeaturedUrl(currentUser);
 
         featuredRestaurants = new ArrayList<>();
         Object businessSearchData[] = new Object[4];
-        businessSearchData[0] = businessSearchUrl;
+        businessSearchData[0] = featuredUrl;
         businessSearchData[1] = featuredRestaurants;
         businessSearchData[2] = adapter;
         businessSearchData[3] = rvFeatured;
@@ -91,13 +89,8 @@ public class SearchFragment extends Fragment {
         {
             @Override
             public boolean onQueryTextSubmit (String query){
-                StringBuilder sb = new StringBuilder("https://api.yelp.com/v3/businesses/search?");
-                sb.append("term=" + query);
-                sb.append("&latitude=" + ParseUser.getCurrentUser().getParseGeoPoint("currentLocation").getLatitude());
-                sb.append("&longitude=" + ParseUser.getCurrentUser().getParseGeoPoint("currentLocation").getLongitude());
-                sb.append("&sort_by=rating");
 
-                String businessSearchUrl = sb.toString();
+                String businessSearchUrl = FileUtils.buildSearchUrl(currentUser, query);
 
                 // create intent for the new activity
                 Intent i = new Intent(getContext(), SearchResultsActivity.class);

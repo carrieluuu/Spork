@@ -1,6 +1,7 @@
 package com.example.spork;
 
 import com.google.android.gms.maps.model.Marker;
+import com.parse.ParseUser;
 
 public class FileUtils {
     public static String buildPlacesUrl(double currentLat, double currentLng, int radius, boolean openNow) {
@@ -23,6 +24,26 @@ public class FileUtils {
         sb.append("&longitude=" + marker.getPosition().longitude);
         sb.append("&limit=1");
 
-        String businessSearchUrl = sb.toString();
+        return sb.toString();
+    }
+
+    public static String buildFeaturedUrl(ParseUser currentUser) {
+        StringBuilder sb = new StringBuilder("https://api.yelp.com/v3/businesses/search?");
+        sb.append("term=restaurants");
+        sb.append("&latitude=" + currentUser.getParseGeoPoint("currentLocation").getLatitude());
+        sb.append("&longitude=" + currentUser.getParseGeoPoint("currentLocation").getLongitude());
+        sb.append("&sort_by=rating");
+
+        return sb.toString();
+    }
+
+    public static String buildSearchUrl(ParseUser currentUser, String query) {
+        StringBuilder sb = new StringBuilder("https://api.yelp.com/v3/businesses/search?");
+        sb.append("term=" + query);
+        sb.append("&latitude=" + ParseUser.getCurrentUser().getParseGeoPoint("currentLocation").getLatitude());
+        sb.append("&longitude=" + ParseUser.getCurrentUser().getParseGeoPoint("currentLocation").getLongitude());
+        sb.append("&sort_by=rating");
+
+        return sb.toString();
     }
 }
