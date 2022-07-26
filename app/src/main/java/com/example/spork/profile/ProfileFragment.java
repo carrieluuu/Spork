@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.R;
 import com.example.spork.feed.Post;
 import com.example.spork.feed.PostsAdapter;
+import com.example.spork.login.LoginAdapter;
+import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -37,15 +40,17 @@ public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
 
-    protected PostsAdapter adapter;
-    protected List<Post> allPosts;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+
+     protected PostsAdapter adapter;
+     protected List<Post> allPosts;
     private ImageView ivProfilePic;
     private TextView tvFullName;
     private TextView tvUsername;
     private TextView tvNumPosts;
     private TextView tvNumFriends;
     private TextView tvBio;
-    private RecyclerView rvPosts;
     private int numPosts;
 
     public ProfileFragment() {
@@ -64,21 +69,24 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tabLayout = view.findViewById(R.id.tab_layout);
+        viewPager = view.findViewById(R.id.view_pager);
         ivProfilePic = view.findViewById(R.id.ivProfilePic);
         tvFullName = view.findViewById(R.id.tvFullName);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvNumPosts = view.findViewById(R.id.tvNumPosts);
         tvNumFriends = view.findViewById(R.id.tvNumFriends);
         tvBio = view.findViewById(R.id.tvBio);
-        rvPosts = view.findViewById(R.id.rvUserPosts);
 
-        allPosts = new ArrayList<>();
-        adapter = new PostsAdapter(getContext(), allPosts);
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_feed_tab));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_saved_tab));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        // set the adapter on the recycler view
-        rvPosts.setAdapter(adapter);
-        // set the layout manager on the recycler view
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        final ProfileAdapter profileAdapter = new ProfileAdapter(getParentFragmentManager(), getContext(), tabLayout.getTabCount());
+        viewPager.setAdapter(profileAdapter);
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         ParseFile profilePic = currentUser.getParseFile("profilePic");
@@ -94,6 +102,9 @@ public class ProfileFragment extends Fragment {
         tvBio.setText(currentUser.getString("bio"));
 
         Log.i(TAG, "bio: " + ParseUser.getCurrentUser().getString("bio"));
+
+        allPosts = new ArrayList<>();
+        adapter = new PostsAdapter(getContext(), allPosts);
 
         try {
             queryPosts();
