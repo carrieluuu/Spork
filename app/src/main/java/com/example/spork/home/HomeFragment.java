@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -48,10 +49,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 /**
  * Home Fragment class to display map with markers connecting the user to the recommended restaurant pages.
@@ -65,8 +70,11 @@ public class HomeFragment extends Fragment {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient client;
-    private SearchView svMap;
-    private ImageView ivProfilePic;
+    private Chip chipOpenNow;
+    private Chip chipPrice;
+    private Chip chipTopRated;
+    private Chip chipPopular;
+    private Chip chipDistance;
     private FloatingActionButton fabZoomIn;
     private FloatingActionButton fabZoomOut;
     private double currentLat;
@@ -76,6 +84,12 @@ public class HomeFragment extends Fragment {
     private int zoom = 15;
     private boolean zoomIn = false;
     private boolean zoomOut = false;
+
+    private boolean openNow = false;
+    private double priceWeight = 0.0;
+    private double ratingWeight = 0.0;
+    private double popularityWeight = 0.0;
+    private double proximityWeight = 0.0;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -96,18 +110,66 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        svMap = view.findViewById(R.id.svMap);
-        ivProfilePic = view.findViewById(R.id.ivProfilePic);
+        chipOpenNow = view.findViewById(R.id.chipOpenNow);
+        chipPrice = view.findViewById(R.id.chipPrice);
+        chipTopRated = view.findViewById(R.id.chipTopRated);
+        chipPopular = view.findViewById(R.id.chipPopular);
+        chipDistance = view.findViewById(R.id.chipDistance);
         fabZoomIn = view.findViewById(R.id.fabZoomIn);
         fabZoomOut = view.findViewById(R.id.fabZoomOut);
 
-        ParseFile profilePic = ParseUser.getCurrentUser().getParseFile("profilePic");
-        if (profilePic != null) {
-            Glide.with(this)
-                    .load(profilePic.getUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(ivProfilePic);
-        }
+        chipOpenNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chipOpenNow.isChecked())
+                    openNow = true;
+                else
+                    openNow = false;
+            }
+        });
+
+        chipPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chipPrice.isChecked())
+                    priceWeight = 0.25;
+                else
+                    priceWeight = 0;
+
+            }
+        });
+
+        chipTopRated.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chipTopRated.isChecked())
+                    ratingWeight = 0.25;
+                else
+                    ratingWeight = 0;
+
+            }
+        });
+
+        chipPopular.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chipPopular.isChecked())
+                    popularityWeight = 0.25;
+                else
+                    popularityWeight = 0;
+
+            }
+        });
+
+        chipDistance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chipDistance.isChecked())
+                    proximityWeight = 0.25;
+                else
+                    proximityWeight = 0;
+            }
+        });
 
         fabZoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +238,18 @@ public class HomeFragment extends Fragment {
             mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
 
+            double[] tempPrefs = new double[]{priceWeight, ratingWeight, popularityWeight, proximityWeight};
+
+            StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
+            sb.append("?fields=name%2Cgeometry/location");
+            sb.append("&location=" + currentLat + "%2C" + currentLng);
+            sb.append("&radius=" + radius);
+            sb.append("&type=restaurant");
+            if (openNow)
+                sb.append("&opennow=true");
+            sb.append("&key=" + BuildConfig.MAPS_API_KEY);
+
+            url = sb.toString();
             url = FileUtils.buildPlacesUrl(currentLat, currentLng, radius);
             Log.i(TAG, url);
 
