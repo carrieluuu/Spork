@@ -245,7 +245,7 @@ public class HomeFragment extends Fragment {
             LatLng currentLatLng = new LatLng(currentLat, currentLng);
             mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
-            
+
             url = FileUtils.buildPlacesUrl(currentLat, currentLng, radius, openNow);
             Log.i(TAG, url);
 
@@ -273,13 +273,7 @@ public class HomeFragment extends Fragment {
                 public boolean onMarkerClick(Marker marker) {
 
                     // send data to business search data [connect places api to yelp api]
-                    StringBuilder sb = new StringBuilder("https://api.yelp.com/v3/businesses/search?");
-                    sb.append("term=" + marker.getTitle());
-                    sb.append("&latitude=" + marker.getPosition().latitude);
-                    sb.append("&longitude=" + marker.getPosition().longitude);
-                    sb.append("&limit=1");
-
-                    String businessSearchUrl = sb.toString();
+                    String businessSearchUrl = FileUtils.buildBusinessSearchUrl(marker);
 
                     Log.i(TAG, "Business search url: "+ businessSearchUrl);
 
