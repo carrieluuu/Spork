@@ -10,4 +10,9 @@
     <string name="loved_it">Loved it 😍</string>
     <string name="okay">Ok 😬</string>
     <string name="dislike">Disliked it 😔</string>
+    <string name="price">Price</string>
+    <string name="rating">Rating</string>
+    <string name="popularity">Popularity</string>
+    <string name="done">Done</string>
+    <string name="proximity">Proximity</string>
 </resources>

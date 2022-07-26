@@ -17,6 +17,7 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14871368408203126" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.2635416666666667" />
+        <entry key="app/src/main/res/layout/activity_preferences.xml" value="0.34264780680338536" />
         <entry key="app/src/main/res/layout/activity_profile_fragment.xml" value="0.225" />
         <entry key="app/src/main/res/layout/activity_restaurant.xml" value="0.29846153846153844" />
         <entry key="app/src/main/res/layout/activity_search_results.xml" value="0.1286231884057971" />
@@ -30,7 +31,7 @@
         <entry key="app/src/main/res/layout/fragment_onboarding2.xml" value="0.4764801025390626" />
         <entry key="app/src/main/res/layout/fragment_onboarding3.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/fragment_onboarding4.xml" value="0.3151041666666667" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.4560434756071671" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.12013191554857333" />
         <entry key="app/src/main/res/layout/fragment_restaurant.xml" value="0.47452952067057286" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.3174194505994926" />
         <entry key="app/src/main/res/layout/item_post.xml" value="0.3423873901367188" />

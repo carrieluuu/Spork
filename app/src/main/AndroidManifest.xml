@@ -29,6 +29,9 @@
         android:theme="@style/Theme.Spork"
         tools:targetApi="31">
         <activity
+            android:name=".login.PreferencesActivity"
+            android:exported="false" />
+        <activity
             android:name=".search.SearchResultsActivity"
             android:exported="false" />
         <activity

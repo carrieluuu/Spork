@@ -1,6 +1,7 @@
 package com.example.spork.recommendation;
 
 import com.example.spork.Restaurant;
+
 import com.example.spork.onboarding.OnboardingFragment1;
 import com.example.spork.onboarding.OnboardingFragment2;
 import com.example.spork.onboarding.OnboardingFragment3;
@@ -21,12 +22,12 @@ public class RecommendationScore {
     public static final int PROXIMITY_SCALE = 5;
 
     private List<Restaurant> restaurantList;
+    private ParseUser currentUser;
 
-    // assigned arbitrary weights for testing purposes
-    private double priceWeight = 0.4;
-    private double ratingWeight = 0.3;
-    private double popularityWeight = 0.2;
-    private double proximityWeight = 0.1;
+    private double priceWeight;
+    private double ratingWeight;
+    private double popularityWeight;
+    private double proximityWeight;
 
     private double priceScore;
     private double ratingScore;
@@ -34,15 +35,9 @@ public class RecommendationScore {
     private double proximityScore;
     private double totalScore;
 
-    public RecommendationScore(List<Restaurant> restaurantList, double[] prefs) {
+    public RecommendationScore(List<Restaurant> restaurantList, ParseUser currentUser) {
         this.restaurantList = restaurantList;
-
-        // update
-        priceWeight = prefs[0];
-        ratingWeight = prefs[1];
-        popularityWeight = prefs[2];
-        proximityWeight = prefs[3];
-
+        this.currentUser = currentUser;
         standardizePopularity();
         standardizeProximity();
         
@@ -94,6 +89,11 @@ public class RecommendationScore {
     }
 
     public void calculateScore(Restaurant restaurant) {
+        priceWeight = currentUser.getDouble("priceWeight");
+        ratingWeight = currentUser.getDouble("ratingWeight");
+        popularityWeight = currentUser.getDouble("popularityWeight");
+        proximityWeight = currentUser.getDouble("proximityWeight");
+
 
         switch(restaurant.getPrice()) {
             case 0:
@@ -115,7 +115,7 @@ public class RecommendationScore {
 
         popularityScore = (restaurant.getPopularity() / POPULARITY_SCALE) * popularityWeight;
 
-        proximityScore = (restaurant.getProximity() / PROXIMITY_SCALE) * popularityWeight;
+        proximityScore = (restaurant.getProximity() / PROXIMITY_SCALE) * proximityWeight;
 
         totalScore = priceScore + ratingScore + popularityScore + proximityScore;
 
