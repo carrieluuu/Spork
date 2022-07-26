@@ -245,18 +245,8 @@ public class HomeFragment extends Fragment {
             LatLng currentLatLng = new LatLng(currentLat, currentLng);
             mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location)));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
-
-            StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
-            sb.append("?fields=name%2Cgeometry/location");
-            sb.append("&location=" + currentLat + "%2C" + currentLng);
-            sb.append("&radius=" + radius);
-            sb.append("&type=restaurant");
-            if (openNow)
-                sb.append("&opennow=true");
-            sb.append("&key=" + BuildConfig.MAPS_API_KEY);
-
-            url = sb.toString();
-            url = FileUtils.buildPlacesUrl(currentLat, currentLng, radius);
+            
+            url = FileUtils.buildPlacesUrl(currentLat, currentLng, radius, openNow);
             Log.i(TAG, url);
 
             // fetch data from json to add nearby restaurants onto the map
