@@ -32,6 +32,9 @@
             android:name=".login.PreferencesActivity"
             android:exported="false" />
         <activity
+            android:name=".search.SearchResultsActivity"
+            android:exported="false" />
+        <activity
             android:name=".restaurant.RestaurantActivity"
             android:exported="false" />
 

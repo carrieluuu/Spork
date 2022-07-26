@@ -1,6 +1,13 @@
 package com.example.spork.recommendation;
 
 import com.example.spork.Restaurant;
+
+import com.example.spork.onboarding.OnboardingFragment1;
+import com.example.spork.onboarding.OnboardingFragment2;
+import com.example.spork.onboarding.OnboardingFragment3;
+import com.example.spork.onboarding.OnboardingFragment4;
+
+import org.json.JSONException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
@@ -10,7 +17,6 @@ import java.util.List;
 
 public class RecommendationScore {
     public static final String TAG = "RecommendationScore";
-    public static final int PRICE_SCALE = 4;
     public static final int RATING_SCALE = 5;
     public static final int POPULARITY_SCALE = 5;
     public static final int PROXIMITY_SCALE = 5;
@@ -87,6 +93,7 @@ public class RecommendationScore {
         ratingWeight = currentUser.getDouble("ratingWeight");
         popularityWeight = currentUser.getDouble("popularityWeight");
         proximityWeight = currentUser.getDouble("proximityWeight");
+
 
         switch(restaurant.getPrice()) {
             case 0:
