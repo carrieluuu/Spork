@@ -6,13 +6,16 @@ import com.example.spork.onboarding.OnboardingFragment2;
 import com.example.spork.onboarding.OnboardingFragment3;
 import com.example.spork.onboarding.OnboardingFragment4;
 
+import org.json.JSONException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class RecommendationScore {
     public static final String TAG = "RecommendationScore";
-    public static final int PRICE_SCALE = 4;
     public static final int RATING_SCALE = 5;
     public static final int POPULARITY_SCALE = 5;
     public static final int PROXIMITY_SCALE = 5;
@@ -31,8 +34,15 @@ public class RecommendationScore {
     private double proximityScore;
     private double totalScore;
 
-    public RecommendationScore(List<Restaurant> restaurantList) {
+    public RecommendationScore(List<Restaurant> restaurantList, double[] prefs) {
         this.restaurantList = restaurantList;
+
+        // update
+        priceWeight = prefs[0];
+        ratingWeight = prefs[1];
+        popularityWeight = prefs[2];
+        proximityWeight = prefs[3];
+
         standardizePopularity();
         standardizeProximity();
         
@@ -55,32 +65,36 @@ public class RecommendationScore {
     }
 
     public void standardizePopularity() {
-        double[] popularity = new double[restaurantList.size()];
+        double[] reviews = new double[restaurantList.size()];
+        double[] standardizedReviews;
         for (int i = 0; i < restaurantList.size(); i++) {
-            popularity[i] = restaurantList.get(i).getReviews();
+            reviews[i] = restaurantList.get(i).getReviews();
         }
         ZScore zscore = new ZScore();
-        popularity = zscore.compute(popularity);
+        standardizedReviews = zscore.compute(reviews);
 
         for (int i = 0; i < restaurantList.size(); i++) {
-            restaurantList.get(i).setPopularity(popularity[i]);
+            restaurantList.get(i).setPopularity(standardizedReviews[i]);
         }
     }
 
     public void standardizeProximity() {
         double[] distance = new double[restaurantList.size()];
+        double[] standardizedDistance;
+        ParseGeoPoint currentLocation = ParseUser.getCurrentUser().getParseGeoPoint("currentLocation");
         for (int i = 0; i < restaurantList.size(); i++) {
-            distance[i] = restaurantList.get(i).getDistance();
+            distance[i] = restaurantList.get(i).getDistance(currentLocation);
         }
         ZScore zscore = new ZScore();
-        distance = zscore.compute(distance);
+        standardizedDistance = zscore.compute(distance);
 
         for (int i = 0; i < restaurantList.size(); i++) {
-            restaurantList.get(i).setProximity(distance[i]);
+            restaurantList.get(i).setProximity(standardizedDistance[i]);
         }
     }
 
     public void calculateScore(Restaurant restaurant) {
+
         switch(restaurant.getPrice()) {
             case 0:
             case 1:
