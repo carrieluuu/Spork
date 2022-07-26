@@ -35,7 +35,6 @@ A social media application that connects users to recommended restaurants/cafes 
 * After enough data has been curated on the user based on their interests/preferences, the app will then show restaurants on a map based on a recommedation algorithm (weighting factors that may influence the choice)
     * E.g. If a friend has visited the restaurant recently, the weighting for it to appears as a recommendation is 100%
     * If the user ranks price as a #1 choosing factor for where to eat, then a less expensive place will take precedence over a more expensive restaurant
-* Search screen that allows the user to manually search for a restaurant's page
 * Camera feature to allow the user to take pictures to share to their news feed or to post reviews on the restaurant page
     * Only allow users to use the in-app camera feature to share pictures/reviews to improve the legitimacy of the review 
 * Page for users to share real-time comments about the restaurant -> user-built data 
@@ -43,6 +42,8 @@ A social media application that connects users to recommended restaurants/cafes 
 * Settings (Accesibility, Notification, General, etc.)
 
 **Optional Nice-to-have Stories**
+* Search screen that allows the user to manually search for a restaurant's page 
+   * Users can also scroll through a list of featured, top-rated restaurants in their area (based on their current location)
 * Users can collect special coupons/points by spinning a spinner when their location matches the location of the restaurant which can be redeemed later 
     * The user can also earn additional points based on the $ amount that they have spent (e.g. use OCR to scan the receipt and identify the amount)
     * If the above does not work out, simplify the process to validate that the user has actually purchased a meal at the restaurant they have to take a picture of the receipt 
@@ -109,10 +110,9 @@ https://www.figma.com/file/a7K0nomcTwHmeO7wQDASZV/Spork-Wireframing?node-id=0%3A
    | objectId      | String   | unique id for the user post (default field) |
    | author        | Pointer to User| user that created the post |
    | image         | File     | image that user posts |
-   | caption       | String   | image caption by author |
-   | commentsCount | Number   | number of comments that has been posted to an image |
-   | likesCount    | Number   | number of likes for the post |
    | createdAt     | DateTime | date when post is created (default field) |
+   | location      | String   | location/restaurant at which the post is taken at |
+   | placeId       | String   | id related to Places API |
    
    
 ### Networking

@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.BuildConfig;
+import com.example.spork.FileUtils;
 import com.example.spork.R;
 import com.example.spork.Restaurant;
 import com.example.spork.restaurant.FetchYelpData;
@@ -58,7 +59,8 @@ import com.parse.ParseUser;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Home Fragment class to display map with markers connecting the user to the recommended restaurant pages.
+ * Users can also explore the map by dragging or change the zoom-in/zoom-out by pinching or double tapping.
  */
 public class HomeFragment extends Fragment {
 
@@ -248,13 +250,13 @@ public class HomeFragment extends Fragment {
             sb.append("&key=" + BuildConfig.MAPS_API_KEY);
 
             url = sb.toString();
+            url = FileUtils.buildPlacesUrl(currentLat, currentLng, radius);
             Log.i(TAG, url);
 
             // fetch data from json to add nearby restaurants onto the map
-            Object dataFetchPlaces[] = new Object[3];
+            Object dataFetchPlaces[] = new Object[2];
             dataFetchPlaces[0] = mMap;
             dataFetchPlaces[1] = url;
-            dataFetchPlaces[2] = tempPrefs;
 
             FetchPlacesData fetchPlacesData  = new FetchPlacesData();
             fetchPlacesData.execute(dataFetchPlaces);
@@ -267,6 +269,8 @@ public class HomeFragment extends Fragment {
                 mMap.clear();
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom -=1));
             }
+
+            mMap.getUiSettings().setMapToolbarEnabled(false);
 
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
