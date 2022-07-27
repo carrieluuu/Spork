@@ -2,6 +2,7 @@ package com.example.spork.home;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import com.example.spork.BuildConfig;
 import com.example.spork.Restaurant;
@@ -9,6 +10,7 @@ import com.example.spork.recommendation.RecommendationScore;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
@@ -29,6 +31,7 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
     private String url;
     private List<Restaurant> restaurantList;
     private String nextPageToken;
+    private CircularProgressIndicator loadingCircle;
 
     @Override
     protected void onPostExecute(String s) {
@@ -50,6 +53,9 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
              markerOptions.position(restaurantList.get(i).getLocation());
              googleMap.addMarker(markerOptions);
          }
+
+        loadingCircle.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -59,6 +65,7 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
 
             googleMap = (GoogleMap) objects[0];
             url = (String) objects[1];
+            loadingCircle = (CircularProgressIndicator) objects[2];
             restaurantList = new ArrayList<>();
 
             DownloadUrl downloadUrl = new DownloadUrl();

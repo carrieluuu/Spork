@@ -41,7 +41,7 @@
         android:layout_marginBottom="12dp"
         android:background="@android:color/transparent"
         android:src="@drawable/logout"
-        android:tint="@color/blue_500"
+        app:tint="@color/blue_500"
         app:layout_constraintBottom_toBottomOf="@+id/tvFriends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

@@ -52,6 +52,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
@@ -78,6 +79,7 @@ public class HomeFragment extends Fragment {
     private Chip chipDistance;
     private FloatingActionButton fabZoomIn;
     private FloatingActionButton fabZoomOut;
+    private CircularProgressIndicator loadingCircle;
     private double currentLat;
     private double currentLng;
     private String url;
@@ -118,6 +120,7 @@ public class HomeFragment extends Fragment {
         chipDistance = view.findViewById(R.id.chipDistance);
         fabZoomIn = view.findViewById(R.id.fabZoomIn);
         fabZoomOut = view.findViewById(R.id.fabZoomOut);
+        loadingCircle = view.findViewById(R.id.loading_circle);
 
         currentUser = ParseUser.getCurrentUser();
 
@@ -240,6 +243,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
+
             mMap = googleMap;
 
             LatLng currentLatLng = new LatLng(currentLat, currentLng);
@@ -250,9 +254,10 @@ public class HomeFragment extends Fragment {
             Log.i(TAG, url);
 
             // fetch data from json to add nearby restaurants onto the map
-            Object dataFetchPlaces[] = new Object[2];
+            Object dataFetchPlaces[] = new Object[3];
             dataFetchPlaces[0] = mMap;
             dataFetchPlaces[1] = url;
+            dataFetchPlaces[2] = loadingCircle;
 
             FetchPlacesData fetchPlacesData  = new FetchPlacesData();
             fetchPlacesData.execute(dataFetchPlaces);
