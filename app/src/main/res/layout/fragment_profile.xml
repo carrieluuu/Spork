@@ -7,19 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".profile.ProfileFragment">
 
-    <TextView
-        android:id="@+id/tvNumFriends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/ivProfilePic"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.348"
-        app:layout_constraintStart_toEndOf="@+id/tvNumPosts"
-        app:layout_constraintTop_toTopOf="@+id/ivProfilePic"
-        app:layout_constraintVertical_bias="0.023"
-        tools:text="123" />
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.042"
+        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvNumPosts"
@@ -32,8 +30,49 @@
         app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toEndOf="@+id/ivProfilePic"
         app:layout_constraintTop_toTopOf="@+id/ivProfilePic"
-        app:layout_constraintVertical_bias="0.023"
+        app:layout_constraintVertical_bias="0.025"
         tools:text="50" />
+
+    <ImageButton
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginBottom="12dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/logout"
+        android:tint="@color/blue_500"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFriends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvNumFriends"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.98" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFullName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintStart_toEndOf="@+id/tvFullName"
+        app:layout_constraintTop_toTopOf="@+id/tvFullName"
+        tools:text="iluvfood" />
+
+    <TextView
+        android:id="@+id/tvNumFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.348"
+        app:layout_constraintStart_toEndOf="@+id/tvNumPosts"
+        app:layout_constraintTop_toTopOf="@+id/ivProfilePic"
+        app:layout_constraintVertical_bias="0.025"
+        tools:text="123" />
 
     <TextView
         android:id="@+id/tvPosts"
@@ -48,28 +87,28 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:id="@+id/tvBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvFullName"
+        app:layout_constraintTop_toBottomOf="@+id/tvFullName"
+        app:layout_constraintVertical_bias="0.466"
+        tools:text="Hi I'm Carrie!" />
+
+    <TextView
         android:id="@+id/tvFriends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Friends"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.334"
+        app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toEndOf="@+id/tvNumPosts"
         app:layout_constraintTop_toBottomOf="@+id/tvNumFriends"
         app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/ivProfilePic"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.018"
-        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvFullName"
@@ -82,32 +121,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/ivProfilePic"
         app:layout_constraintTop_toBottomOf="@+id/ivProfilePic"
-        app:layout_constraintVertical_bias="0.042"
+        app:layout_constraintVertical_bias="0.044"
         tools:text="Carrie Lu" />
 
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/tvFullName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.072"
-        app:layout_constraintStart_toEndOf="@+id/tvFullName"
-        app:layout_constraintTop_toTopOf="@+id/tvFullName"
-        tools:text="iluvfood" />
-
-
-    <TextView
-        android:id="@+id/tvBio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tvFullName"
-        app:layout_constraintTop_toBottomOf="@+id/tvFullName"
-        app:layout_constraintVertical_bias="0.244"
-        tools:text="Hi I'm Carrie!" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -116,7 +132,7 @@
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".7"
+        app:layout_constraintHeight_percent=".74"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1">
@@ -124,7 +140,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="375dp"
+            android:layout_height="450dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".7"
@@ -143,22 +159,6 @@
             app:layout_constraintVertical_bias="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageButton
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginBottom="12dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/logout"
-        android:tint="@color/blue_500"
-        app:layout_constraintBottom_toBottomOf="@+id/tvFriends"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tvNumFriends"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

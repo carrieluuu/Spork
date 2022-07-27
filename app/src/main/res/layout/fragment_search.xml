@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.005">
+        app:layout_constraintVertical_bias="0.059">
 
         <TextView
             android:id="@+id/tvGreeting"
@@ -60,7 +60,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFeatured"
         android:layout_width="350dp"
-        android:layout_height="400dp"
+        android:layout_height="501dp"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
