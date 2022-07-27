@@ -40,8 +40,11 @@ public class YelpSearchById extends AsyncTask<Object, String, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        adapter = new SearchAdapter(context.get(), savedRestaurants);
+        if (savedRestaurants == null || savedRestaurants.size() <= 0) {
+            return;
+        }
 
+        adapter = new SearchAdapter(context.get(), savedRestaurants);
         // set the adapter on the recycler view
         rvSaved.setAdapter(adapter);
         // set the layout manager on the recycler view
