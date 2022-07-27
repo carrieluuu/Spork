@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spork.R;
 import com.example.spork.feed.Post;
 import com.example.spork.feed.PostsAdapter;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -24,14 +25,18 @@ import java.util.List;
 public class ProfileFeedTabFragment extends Fragment {
 
     private static final String TAG = "ProfileFeedTabFragment";
-    private RecyclerView rvUserPosts;
+
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
+    private RecyclerView rvUserPosts;
+    private CircularProgressIndicator loadingCircle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.profile_feed_tab_fragment, container, false);
+
         rvUserPosts = root.findViewById(R.id.rvUserPosts);
+        loadingCircle = root.findViewById(R.id.loading_circle);
 
         allPosts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts);
@@ -68,6 +73,7 @@ public class ProfileFeedTabFragment extends Fragment {
                         // save received posts to list and notify adapter of new data
                         allPosts.addAll(posts);
                         adapter.notifyDataSetChanged();
+                        loadingCircle.setVisibility(View.GONE);
                     }
                 });
     }

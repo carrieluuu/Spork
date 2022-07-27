@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.spork.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -37,6 +38,7 @@ public class FeedFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
     private FloatingActionButton fabCompose;
+    private CircularProgressIndicator loadingCircle;
 
     public FeedFragment() {
         // Required empty public constructor
@@ -56,6 +58,7 @@ public class FeedFragment extends Fragment {
 
         rvPosts = view.findViewById(R.id.rvPosts);
         fabCompose = view.findViewById(R.id.fabCompose);
+        loadingCircle = view.findViewById(R.id.loading_circle);
 
         allPosts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts);
@@ -167,6 +170,7 @@ public class FeedFragment extends Fragment {
                         // save received posts to list and notify adapter of new data
                         allPosts.addAll(posts);
                         adapter.notifyDataSetChanged();
+                        loadingCircle.setVisibility(View.GONE);
                     }
                 });
     }
