@@ -23,7 +23,7 @@
 
     <TextView
         android:id="@+id/tvRestaurantName"
-        android:layout_width="300dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:text="TextView"
@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toTopOf="@+id/ivRestaurant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName"
-        app:layout_constraintVertical_bias="0.425" />
+        app:layout_constraintVertical_bias="0.718" />
 
     <TextView
         android:id="@+id/tvAddress"
@@ -56,7 +56,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ivAddress"
         app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName"
-        app:layout_constraintVertical_bias="0.488"
+        app:layout_constraintVertical_bias="0.756"
         tools:text="1195 Merrill St, Menlo Park, CA 94025" />
 
     <ImageView
@@ -182,10 +182,23 @@
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/tvAddress"
         app:layout_constraintEnd_toEndOf="@+id/tvAddress"
-        app:layout_constraintHorizontal_bias="0.565"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvRestaurantName"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.694"
         app:srcCompat="@drawable/ic_bookmark_outline" />
+
+    <ImageButton
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/tvAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintStart_toEndOf="@+id/btnBookmark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.695"
+        app:srcCompat="@drawable/ic_close" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

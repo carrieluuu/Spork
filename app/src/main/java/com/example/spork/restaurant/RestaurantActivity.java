@@ -61,7 +61,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private RecyclerView rvReviews;
     private Button btnAddReview;
     private ImageButton btnBookmark;
-    private List<String> savedRestaurants;
+    private ImageButton btnClose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +76,7 @@ public class RestaurantActivity extends AppCompatActivity {
         tvWebsite = findViewById(R.id.tvWebsite);
         tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
         btnBookmark = findViewById(R.id.btnBookmark);
+        btnClose = findViewById(R.id.btnClose);
 
         restaurant = Parcels.unwrap(getIntent().getParcelableExtra("restaurant"));
 
@@ -121,6 +122,14 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        // Live User Reviews
         rvReviews = findViewById(R.id.rvReviews);
         btnAddReview = findViewById(R.id.btnAddReview);
 
