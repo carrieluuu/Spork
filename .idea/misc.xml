@@ -14,13 +14,11 @@
         <entry key="app/src/main/res/drawable/vie_bg.xml" value="0.246" />
         <entry key="app/src/main/res/layout/activity_compose.xml" value="0.19576009114583337" />
         <entry key="app/src/main/res/layout/activity_feed.xml" value="0.22395833333333334" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.13348541259765628" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14871368408203126" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.2635416666666667" />
-        <entry key="app/src/main/res/layout/activity_preferences.xml" value="0.34264780680338536" />
         <entry key="app/src/main/res/layout/activity_profile_fragment.xml" value="0.225" />
         <entry key="app/src/main/res/layout/activity_restaurant.xml" value="0.29846153846153844" />
-        <entry key="app/src/main/res/layout/activity_search_results.xml" value="0.1286231884057971" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2240458170572917" />
         <entry key="app/src/main/res/layout/dialog_review.xml" value="0.5245280832484149" />
         <entry key="app/src/main/res/layout/fragment_compose.xml" value="0.1852355072463768" />
@@ -31,16 +29,16 @@
         <entry key="app/src/main/res/layout/fragment_onboarding2.xml" value="0.4764801025390626" />
         <entry key="app/src/main/res/layout/fragment_onboarding3.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/fragment_onboarding4.xml" value="0.3151041666666667" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.29131874416185455" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.12013191554857333" />
         <entry key="app/src/main/res/layout/fragment_restaurant.xml" value="0.47452952067057286" />
-        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.3174194505994926" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.15653495440729484" />
         <entry key="app/src/main/res/layout/item_post.xml" value="0.3423873901367188" />
         <entry key="app/src/main/res/layout/item_review.xml" value="0.451244166277457" />
-        <entry key="app/src/main/res/layout/item_search_restaurant.xml" value="0.30864197530864196" />
+        <entry key="app/src/main/res/layout/item_search_restaurant.xml" value="0.15653495440729484" />
         <entry key="app/src/main/res/layout/login_tab_fragment.xml" value="0.24572448730468757" />
-        <entry key="app/src/main/res/layout/profile_feed_tab_fragment.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/layout/profile_feed_tab_fragment.xml" value="0.15653495440729484" />
         <entry key="app/src/main/res/layout/registration_tab_fragment.xml" value="0.27135467529296875" />
-        <entry key="app/src/main/res/layout/saved_restaurants_tab_fragment.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/layout/saved_restaurants_tab_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/signup_tab_fragment.xml" value="0.2635833740234375" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.22760416666666666" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.34322916666666664" />
