@@ -11,7 +11,7 @@
         android:id="@+id/tvRestaurantName2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="Live Now"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -23,15 +23,15 @@
 
     <TextView
         android:id="@+id/tvRestaurantName"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="52dp"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.171"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Son &amp; Garden" />
@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toTopOf="@+id/ivRestaurant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName"
-        app:layout_constraintVertical_bias="0.482" />
+        app:layout_constraintVertical_bias="0.425" />
 
     <TextView
         android:id="@+id/tvAddress"
@@ -56,7 +56,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ivAddress"
         app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName"
-        app:layout_constraintVertical_bias="0.571"
+        app:layout_constraintVertical_bias="0.488"
         tools:text="1195 Merrill St, Menlo Park, CA 94025" />
 
     <ImageView
@@ -68,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.171"
+        app:layout_constraintVertical_bias="0.263"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -155,13 +155,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReviews"
         android:layout_width="377dp"
-        android:layout_height="214dp"
+        android:layout_height="180dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvRestaurantName2"
         app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName2"
-        app:layout_constraintVertical_bias="0.179" />
+        app:layout_constraintVertical_bias="0.065" />
 
     <Button
         android:id="@+id/btnAddReview"
@@ -181,11 +181,11 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/tvAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintEnd_toEndOf="@+id/tvAddress"
+        app:layout_constraintHorizontal_bias="0.565"
         app:layout_constraintStart_toEndOf="@+id/tvRestaurantName"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.484"
+        app:layout_constraintVertical_bias="0.694"
         app:srcCompat="@drawable/ic_bookmark_outline" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
