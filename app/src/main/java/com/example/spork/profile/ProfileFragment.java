@@ -1,5 +1,6 @@
 package com.example.spork.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,9 +23,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.R;
 import com.example.spork.feed.Post;
 import com.example.spork.feed.PostsAdapter;
+import com.example.spork.login.LoginActivity;
 import com.example.spork.login.LoginAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
+import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
@@ -43,14 +47,15 @@ public class ProfileFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-     protected PostsAdapter adapter;
-     protected List<Post> allPosts;
+    protected PostsAdapter adapter;
+    protected List<Post> allPosts;
     private ImageView ivProfilePic;
     private TextView tvFullName;
     private TextView tvUsername;
     private TextView tvNumPosts;
     private TextView tvNumFriends;
     private TextView tvBio;
+    private ImageButton btnLogout;
     private int numPosts;
 
     public ProfileFragment() {
@@ -77,6 +82,7 @@ public class ProfileFragment extends Fragment {
         tvNumPosts = view.findViewById(R.id.tvNumPosts);
         tvNumFriends = view.findViewById(R.id.tvNumFriends);
         tvBio = view.findViewById(R.id.tvBio);
+        btnLogout = view.findViewById(R.id.btnLogout);
 
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_feed_tab));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_saved_tab));
@@ -114,6 +120,22 @@ public class ProfileFragment extends Fragment {
         tvNumPosts.setText(String.valueOf(numPosts));
         tvNumFriends.setText(String.valueOf(currentUser.getInt("numFriends")));
 
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOutInBackground(new LogOutCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Issue with logout", e);
+                            return;
+                        }
+                        goLoginActivity();
+                    }
+                });
+            }
+        });
+
     }
 
     protected void queryPosts() throws ParseException {
@@ -136,5 +158,11 @@ public class ProfileFragment extends Fragment {
                     }
                 });
         numPosts = query.count();
+    }
+    private void goLoginActivity() {
+        Intent i = new Intent(getContext(), LoginActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // this makes sure the Back button won't work
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // same as above
+        startActivity(i);
     }
 }

@@ -15,11 +15,37 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.588"
+        app:layout_constraintHorizontal_bias="0.348"
         app:layout_constraintStart_toEndOf="@+id/tvNumPosts"
         app:layout_constraintTop_toTopOf="@+id/ivProfilePic"
         app:layout_constraintVertical_bias="0.023"
         tools:text="123" />
+
+    <TextView
+        android:id="@+id/tvNumPosts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.17"
+        app:layout_constraintStart_toEndOf="@+id/ivProfilePic"
+        app:layout_constraintTop_toTopOf="@+id/ivProfilePic"
+        app:layout_constraintVertical_bias="0.023"
+        tools:text="50" />
+
+    <TextView
+        android:id="@+id/tvPosts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Posts"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintStart_toEndOf="@+id/ivProfilePic"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumPosts"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvFriends"
@@ -28,7 +54,7 @@
         android:text="Friends"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.334"
         app:layout_constraintStart_toEndOf="@+id/tvNumPosts"
         app:layout_constraintTop_toBottomOf="@+id/tvNumFriends"
         app:layout_constraintVertical_bias="0.0" />
@@ -39,10 +65,10 @@
         android:layout_height="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.043"
+        app:layout_constraintVertical_bias="0.018"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -69,32 +95,6 @@
         app:layout_constraintStart_toEndOf="@+id/tvFullName"
         app:layout_constraintTop_toTopOf="@+id/tvFullName"
         tools:text="iluvfood" />
-
-    <TextView
-        android:id="@+id/tvPosts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Posts"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.34"
-        app:layout_constraintStart_toEndOf="@+id/ivProfilePic"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumPosts"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/tvNumPosts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.345"
-        app:layout_constraintStart_toEndOf="@+id/ivProfilePic"
-        app:layout_constraintTop_toTopOf="@+id/ivProfilePic"
-        app:layout_constraintVertical_bias="0.023"
-        tools:text="50" />
 
 
     <TextView
@@ -143,6 +143,22 @@
             app:layout_constraintVertical_bias="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginBottom="12dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/logout"
+        android:tint="@color/blue_500"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFriends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvNumFriends"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
