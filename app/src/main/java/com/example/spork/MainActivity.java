@@ -70,10 +70,6 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
-        else if (item.getItemId() == R.id.btnCompose) {
-            fragmentManager.beginTransaction().replace(R.id.flContainer, new ComposeFragment()).commit();
-
-        }
 
         return super.onOptionsItemSelected(item);
     }

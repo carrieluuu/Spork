@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.spork.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -35,6 +36,7 @@ public class FeedFragment extends Fragment {
     private RecyclerView rvPosts;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private FloatingActionButton fabCompose;
 
     public FeedFragment() {
         // Required empty public constructor
@@ -53,6 +55,7 @@ public class FeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvPosts = view.findViewById(R.id.rvPosts);
+        fabCompose = view.findViewById(R.id.fabCompose);
 
         allPosts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts);
@@ -61,6 +64,13 @@ public class FeedFragment extends Fragment {
         rvPosts.setAdapter(adapter);
         // set the layout manager on the recycler view
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        fabCompose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction().replace(R.id.flContainer, new ComposeFragment()).commit();
+            }
+        });
 
         queryPosts();
         setUpRefreshContainer(view);
