@@ -12,70 +12,106 @@
         android:layout_height="wrap_content"
         android:text="What's important to you?"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintVertical_bias="0.096" />
 
     <TextView
         android:id="@+id/tvPreferenceDescription"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="Tell us your preferences and we will handpick the best recommendations suited for you."
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvPreferences"
         app:layout_constraintTop_toBottomOf="@+id/tvPreferences"
-        app:layout_constraintVertical_bias="0.012" />
+        app:layout_constraintVertical_bias="0.034" />
 
-    <CheckBox
-        android:id="@+id/cbPrice"
-        android:layout_width="125dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="28dp"
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:text="@string/price"
-        android:onClick="onCheckboxClicked"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/tvPreferenceDescription"
         app:layout_constraintTop_toBottomOf="@+id/tvPreferenceDescription" />
 
-    <CheckBox
-        android:id="@+id/cbRating"
-        android:layout_width="125dp"
-        android:layout_height="51dp"
+    <Spinner
+        android:id="@+id/price_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        app:layout_constraintEnd_toEndOf="@+id/rating_spinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvPrice"
+        app:layout_constraintTop_toTopOf="@+id/tvPrice" />
+
+    <TextView
+        android:id="@+id/tvRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="@string/rating"
-        android:onClick="onCheckboxClicked"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cbPrice" />
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/tvPrice"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
 
-    <CheckBox
-        android:id="@+id/cbPopularity"
-        android:layout_width="125dp"
-        android:layout_height="51dp"
+    <Spinner
+        android:id="@+id/rating_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRating"
+        app:layout_constraintEnd_toEndOf="@+id/popularity_spinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvRating"
+        app:layout_constraintTop_toBottomOf="@+id/price_spinner" />
+
+    <TextView
+        android:id="@+id/tvPopularity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="@string/popularity"
-        android:onClick="onCheckboxClicked"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cbRating" />
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/tvRating"
+        app:layout_constraintTop_toBottomOf="@+id/tvRating" />
 
-    <CheckBox
-        android:id="@+id/cbProximity"
-        android:layout_width="125dp"
-        android:layout_height="51dp"
+    <Spinner
+        android:id="@+id/popularity_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/proximity_spinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvPopularity"
+        app:layout_constraintTop_toBottomOf="@+id/rating_spinner" />
+
+    <TextView
+        android:id="@+id/tvProximity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="@string/proximity"
-        android:onClick="onCheckboxClicked"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cbPopularity" />
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/tvPopularity"
+        app:layout_constraintTop_toBottomOf="@+id/tvPopularity" />
+
+    <Spinner
+        android:id="@+id/proximity_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvProximity"
+        app:layout_constraintStart_toEndOf="@+id/tvProximity"
+        app:layout_constraintTop_toBottomOf="@+id/popularity_spinner" />
 
     <Button
         android:id="@+id/btnDone"
@@ -86,7 +122,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cbProximity"
-        app:layout_constraintVertical_bias="0.117" />
+        app:layout_constraintTop_toBottomOf="@+id/tvProximity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
