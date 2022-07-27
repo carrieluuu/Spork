@@ -33,14 +33,17 @@ public class SavedRestaurantsTabFragment extends Fragment {
         savedRestaurantIds = (ArrayList<String>)ParseUser.getCurrentUser().get("savedRestaurants");
 
         savedRestaurants = new ArrayList<>();
-        Object searchByIdData[] = new Object[4];
-        searchByIdData[0] = savedRestaurants;
-        searchByIdData[1] = adapter;
-        searchByIdData[2] = rvSaved;
-        searchByIdData[3] = savedRestaurantIds;
 
-        YelpSearchById searchById  = new YelpSearchById(getContext());
-        searchById.execute(searchByIdData);
+        if (savedRestaurantIds != null && savedRestaurantIds.size() > 0) {
+            Object searchByIdData[] = new Object[4];
+            searchByIdData[0] = savedRestaurants;
+            searchByIdData[1] = adapter;
+            searchByIdData[2] = rvSaved;
+            searchByIdData[3] = savedRestaurantIds;
+
+            YelpSearchById searchById = new YelpSearchById(getContext());
+            searchById.execute(searchByIdData);
+        }
 
         return root;
     }
