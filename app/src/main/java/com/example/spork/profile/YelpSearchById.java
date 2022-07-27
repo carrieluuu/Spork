@@ -2,6 +2,7 @@ package com.example.spork.profile;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import com.example.spork.FileUtils;
 import com.example.spork.Restaurant;
 import com.example.spork.restaurant.YelpService;
 import com.example.spork.search.SearchAdapter;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +33,7 @@ public class YelpSearchById extends AsyncTask<Object, String, String> {
     private SearchAdapter adapter;
     private RecyclerView rvSaved;
     private ArrayList<String> savedRestaurantIds;
+    private CircularProgressIndicator loadingCircle;
 
     public YelpSearchById (Context context) {
         this.context = new WeakReference<Context>(context);
@@ -50,6 +53,8 @@ public class YelpSearchById extends AsyncTask<Object, String, String> {
         // set the layout manager on the recycler view
         rvSaved.setLayoutManager(new LinearLayoutManager(context.get()));
 
+        loadingCircle.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -59,6 +64,7 @@ public class YelpSearchById extends AsyncTask<Object, String, String> {
         adapter = (SearchAdapter) objects[1];
         rvSaved = (RecyclerView) objects[2];
         savedRestaurantIds = (ArrayList<String>) objects[3];
+        loadingCircle = (CircularProgressIndicator) objects[4];
 
         savedRestaurants = new ArrayList<>();
 
