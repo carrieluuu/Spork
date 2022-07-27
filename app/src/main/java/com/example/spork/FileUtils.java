@@ -46,4 +46,8 @@ public class FileUtils {
 
         return sb.toString();
     }
+
+    public static String buildSavedUrl(String id) {
+        return "https://api.yelp.com/v3/businesses/" + id;
+    }
 }

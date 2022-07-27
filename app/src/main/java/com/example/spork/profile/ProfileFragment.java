@@ -87,7 +87,6 @@ public class ProfileFragment extends Fragment {
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-
         ParseUser currentUser = ParseUser.getCurrentUser();
         ParseFile profilePic = currentUser.getParseFile("profilePic");
         if (profilePic != null) {
