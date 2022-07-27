@@ -15,4 +15,11 @@
     <string name="popularity">Popularity</string>
     <string name="done">Done</string>
     <string name="proximity">Proximity</string>
+    <string-array name="preferences_array">
+        <item>Very important</item>
+        <item>Important</item>
+        <item>Neutral</item>
+        <item>Unimportant</item>
+        <item>Very unimportant</item>
+    </string-array>
 </resources>
