@@ -29,7 +29,7 @@ public class FileUtils {
 
     public static String buildFeaturedUrl(ParseUser currentUser) {
         StringBuilder sb = new StringBuilder("https://api.yelp.com/v3/businesses/search?");
-        sb.append("term=restaurants");
+        sb.append("term=restaurant");
         sb.append("&latitude=" + currentUser.getParseGeoPoint("currentLocation").getLatitude());
         sb.append("&longitude=" + currentUser.getParseGeoPoint("currentLocation").getLongitude());
         sb.append("&sort_by=rating");

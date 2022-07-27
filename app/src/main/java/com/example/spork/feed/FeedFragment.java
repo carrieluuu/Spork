@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Feed Fragment to display all posts made by friends with location tags on each post
  */
 public class FeedFragment extends Fragment {
 
