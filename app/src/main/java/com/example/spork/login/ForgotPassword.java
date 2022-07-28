@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.spork.R;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class ForgotPassword extends AppCompatActivity {
@@ -32,12 +29,9 @@ public class ForgotPassword extends AppCompatActivity {
     }
 
     private void resetPasswordButton() {
-        btnResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick reset password button");
-                passwordReset();
-            }
+        btnResetPassword.setOnClickListener(v -> {
+            Log.i(TAG, "onClick reset password button");
+            passwordReset();
         });
     }
 

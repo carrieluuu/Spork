@@ -52,7 +52,6 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
  * ComposeFragment allows the user to launch the camera app, take a picture of their food/the restaurant, tag the location, and share to their social feed.
  */
 public class ComposeFragment extends Fragment {
@@ -109,12 +108,7 @@ public class ComposeFragment extends Fragment {
     }
     private void captureButton(View view) {
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
-        btnCaptureImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchCamera();
-            }
-        });
+        btnCaptureImage.setOnClickListener(v -> launchCamera());
     }
 
     private void launchCamera() {
@@ -224,37 +218,31 @@ public class ComposeFragment extends Fragment {
 
     private void addLocationButton(View view) {
         btnAddLocation = view.findViewById(R.id.btnAddLocation);
-        btnAddLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Set the fields to specify which types of place data to
-                // return after the user has made a selection.
-                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+        btnAddLocation.setOnClickListener(v -> {
+            // Set the fields to specify which types of place data to
+            // return after the user has made a selection.
+            List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
 
-                // Start the autocomplete intent.
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                        .build(getContext());
-                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+            // Start the autocomplete intent.
+            Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                    .build(getContext());
+            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
 
-            }
         });
     }
 
     private void submitButton(View view) {
         btnSubmit = view.findViewById(R.id.btnSubmit);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (photoFile == null || ivPostImage.getDrawable() == null) {
-                    Toast.makeText(getContext(), "There is no image", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(currentUser, photoFile);
-
-                new DelayTask().execute(15);
-
+        btnSubmit.setOnClickListener(v -> {
+            if (photoFile == null || ivPostImage.getDrawable() == null) {
+                Toast.makeText(getContext(), "There is no image", Toast.LENGTH_SHORT).show();
+                return;
             }
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            savePost(currentUser, photoFile);
+
+            new DelayTask().execute(15);
+
         });
     }
 
@@ -274,12 +262,7 @@ public class ComposeFragment extends Fragment {
             }
 
             final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    goFeedFragment();
-                }
-            }, 50);
+            handler.postDelayed(() -> goFeedFragment(), 50);
 
             return "Complete";
         }
@@ -300,16 +283,13 @@ public class ComposeFragment extends Fragment {
         post.setUser(currentUser);
         post.setLocation(locationName);
         post.setPlaceId(placeId);
-        post.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
-                }
-                Log.i(TAG, "Post save was successful");
-                ivPostImage.setImageResource(0);
+        post.saveInBackground(e -> {
+            if (e != null){
+                Log.e(TAG, "Error while saving", e);
+                Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
             }
+            Log.i(TAG, "Post save was successful");
+            ivPostImage.setImageResource(0);
         });
     }
 

@@ -1,8 +1,6 @@
 package com.example.spork.search;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +17,6 @@ import com.example.spork.R;
 import com.example.spork.Restaurant;
 import com.example.spork.restaurant.FetchYelpData;
 import com.google.android.material.chip.Chip;
-
-import org.parceler.Parcels;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -107,7 +103,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             if (position != RecyclerView.NO_POSITION) {
                 Restaurant restaurant = restaurants.get(position);
 
-                Object yelpData[] = new Object[2];
+                Object[] yelpData = new Object[2];
                 yelpData[0] = null;
                 yelpData[1] = restaurant.getYelpId();
 

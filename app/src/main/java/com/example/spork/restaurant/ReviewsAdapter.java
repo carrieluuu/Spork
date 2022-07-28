@@ -26,7 +26,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         private List<Review> reviews;
 
     public ReviewsAdapter(Context context, List<Review> reviews) {
-            this.context = new WeakReference<Context>(context);
+            this.context = new WeakReference<>(context);
             this.reviews = reviews;
         }
 

@@ -15,8 +15,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.spork.MainActivity;
 import com.example.spork.R;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class LoginTabFragment extends Fragment {
@@ -81,42 +79,33 @@ public class LoginTabFragment extends Fragment {
     }
 
     private void loginButton() {
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG,"onClick login button");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                loginUser(username, password);
-            }
+        btnLogin.setOnClickListener(v -> {
+            Log.i(TAG,"onClick login button");
+            String username = etUsername.getText().toString();
+            String password = etPassword.getText().toString();
+            loginUser(username, password);
         });
     }
 
     private void loginUser(String username, String password) {
         Log.i(TAG, "attempting to log in user " + username);
-        ParseUser.logInInBackground(username, password, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with login", e);
-                    Toast.makeText(getContext(), "Incorrect credentials", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                goMainActivity();
-                Toast.makeText(getContext(), "Login success!", Toast.LENGTH_SHORT).show();
-
+        ParseUser.logInInBackground(username, password, (user, e) -> {
+            if (e != null) {
+                Log.e(TAG, "Issue with login", e);
+                Toast.makeText(getContext(), "Incorrect credentials", Toast.LENGTH_LONG).show();
+                return;
             }
+            goMainActivity();
+            Toast.makeText(getContext(), "Login success!", Toast.LENGTH_SHORT).show();
+
         });
     }
 
     private void forgotPassword() {
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG,"onClick forget password button");
-                Intent i = new Intent(getContext(), ForgotPassword.class);
-                startActivity(i);
-            }
+        tvForgotPassword.setOnClickListener(v -> {
+            Log.i(TAG,"onClick forget password button");
+            Intent i = new Intent(getContext(), ForgotPassword.class);
+            startActivity(i);
         });
     }
 

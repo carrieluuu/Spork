@@ -15,8 +15,6 @@ public class OnboardingFragment1 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_onboarding1, container, false);
-
-        return root;
+        return (ViewGroup) inflater.inflate(R.layout.fragment_onboarding1, container, false);
     }
 }

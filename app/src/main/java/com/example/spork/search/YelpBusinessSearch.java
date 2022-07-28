@@ -22,8 +22,6 @@ import java.util.List;
 
 public class YelpBusinessSearch extends AsyncTask<Object, String, String> {
 
-    private static final String TAG = "YelpBusinessSearch";
-
     private WeakReference<Context> context;
     private String url;
     private String businessSearchYelpData;
@@ -34,7 +32,7 @@ public class YelpBusinessSearch extends AsyncTask<Object, String, String> {
     private CircularProgressIndicator loadingCircle;
 
     public YelpBusinessSearch (Context context) {
-        this.context = new WeakReference<Context>(context);
+        this.context = new WeakReference<>(context);
     }
 
     @Override
@@ -70,7 +68,7 @@ public class YelpBusinessSearch extends AsyncTask<Object, String, String> {
             JSONObject businessSearchJSON = new JSONObject(businessSearchYelpData);
             JSONArray businessesJSON = businessSearchJSON.getJSONArray("businesses");
 
-            int maxResults = (businessesJSON.length() > 30 ? 30 : businessesJSON.length());
+            int maxResults = (Math.min(businessesJSON.length(), 30));
             for (int i = 0; i < maxResults; i++) {
                 JSONObject restaurantObject = businessesJSON.getJSONObject(i);
                 String id = restaurantObject.getString("id");

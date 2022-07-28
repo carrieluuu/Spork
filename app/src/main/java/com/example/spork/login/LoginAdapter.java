@@ -15,7 +15,7 @@ public class LoginAdapter extends FragmentPagerAdapter {
 
     public LoginAdapter(FragmentManager fm, Context context, int totalTabs) {
         super(fm);
-        this.context = new WeakReference<Context>(context);
+        this.context = new WeakReference<>(context);
         this.totalTabs = totalTabs;
     }
 
@@ -28,12 +28,10 @@ public class LoginAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position) {
             case 0:
-                LoginTabFragment loginTabFragment = new LoginTabFragment();
-                return loginTabFragment;
+                return new LoginTabFragment();
 
             case 1:
-                RegistrationTabFragment registrationTabFragment = new RegistrationTabFragment();
-                return registrationTabFragment;
+                return new RegistrationTabFragment();
             default:
                 return null;
 

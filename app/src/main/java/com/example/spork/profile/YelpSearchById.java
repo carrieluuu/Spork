@@ -36,7 +36,7 @@ public class YelpSearchById extends AsyncTask<Object, String, String> {
     private CircularProgressIndicator loadingCircle;
 
     public YelpSearchById (Context context) {
-        this.context = new WeakReference<Context>(context);
+        this.context = new WeakReference<>(context);
     }
 
     @Override

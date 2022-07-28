@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
@@ -24,10 +22,7 @@ import com.example.spork.R;
 import com.example.spork.feed.Post;
 import com.example.spork.feed.PostsAdapter;
 import com.example.spork.login.LoginActivity;
-import com.example.spork.login.LoginAdapter;
 import com.google.android.material.tabs.TabLayout;
-import com.parse.FindCallback;
-import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
@@ -120,21 +115,13 @@ public class ProfileFragment extends Fragment {
         tvNumPosts.setText(String.valueOf(numPosts));
         tvNumFriends.setText(String.valueOf(currentUser.getInt("numFriends")));
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ParseUser.logOutInBackground(new LogOutCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null) {
-                            Log.e(TAG, "Issue with logout", e);
-                            return;
-                        }
-                        goLoginActivity();
-                    }
-                });
+        btnLogout.setOnClickListener(v -> ParseUser.logOutInBackground(e -> {
+            if (e != null) {
+                Log.e(TAG, "Issue with logout", e);
+                return;
             }
-        });
+            goLoginActivity();
+        }));
 
     }
 
@@ -143,19 +130,16 @@ public class ProfileFragment extends Fragment {
         query.include(Post.KEY_USER)
                 .whereEqualTo("user", ParseUser.getCurrentUser())
                 .addDescendingOrder("createdAt")
-                .findInBackground(new FindCallback<Post>() {
-                    @Override
-                    public void done(List<Post> posts, ParseException e) {
-                        // check for errors
-                        if (e != null) {
-                            Log.e(TAG, "Issue with getting posts", e);
-                            return;
-                        }
-
-                        // save received posts to list and notify adapter of new data
-                        allPosts.addAll(posts);
-                        adapter.notifyDataSetChanged();
+                .findInBackground((posts, e) -> {
+                    // check for errors
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
                     }
+
+                    // save received posts to list and notify adapter of new data
+                    allPosts.addAll(posts);
+                    adapter.notifyDataSetChanged();
                 });
         numPosts = query.count();
     }

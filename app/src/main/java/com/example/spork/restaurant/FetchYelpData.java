@@ -4,20 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.spork.MainActivity;
-import com.example.spork.R;
 import com.example.spork.Restaurant;
 
 import org.json.JSONArray;
@@ -40,7 +26,7 @@ public class FetchYelpData extends AsyncTask<Object, String, String> {
     private Restaurant restaurant;
 
     public FetchYelpData (Context context) {
-        this.context = new WeakReference<Context>(context);
+        this.context = new WeakReference<>(context);
     }
 
     @Override
@@ -90,7 +76,7 @@ public class FetchYelpData extends AsyncTask<Object, String, String> {
             }
             String imageUrl = businessDetailsJSON.getString("image_url");
 
-            boolean isOpenNow = false;
+            boolean isOpenNow;
             if (!businessDetailsJSON.has("hours")) {
                 isOpenNow = false;
             } else {

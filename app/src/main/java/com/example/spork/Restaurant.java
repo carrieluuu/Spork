@@ -4,8 +4,6 @@ import android.location.Location;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseUser;
-
 import org.parceler.Parcel;
 
 @Parcel

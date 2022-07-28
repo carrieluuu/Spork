@@ -68,12 +68,7 @@ public class FeedFragment extends Fragment {
         // set the layout manager on the recycler view
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        fabCompose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().replace(R.id.flContainer, new ComposeFragment()).commit();
-            }
-        });
+        fabCompose.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.flContainer, new ComposeFragment()).commit());
 
         queryPosts();
         setUpRefreshContainer(view);
@@ -106,24 +101,21 @@ public class FeedFragment extends Fragment {
                 .setLimit(QUERY_LIMIT)
                 .addDescendingOrder("createdAt")
                 .whereLessThan("createdAt", allPosts.get(allPosts.size() - 1).getCreatedAt())
-                .findInBackground(new FindCallback<Post>() {
-                    @Override
-                    public void done(List<Post> posts, ParseException e) {
-                        // check for errors
-                        if (e != null) {
-                            Log.e(TAG, "Issue with getting posts", e);
-                            return;
-                        }
-
-                        // for debugging purposes let's print every post description to logcat
-                        for (Post post : posts) {
-                            Log.i(TAG, "Post: by username: " + post.getUser().getUsername());
-                        }
-
-                        // save received posts to list and notify adapter of new data
-                        allPosts.addAll(posts);
-                        adapter.notifyDataSetChanged();
+                .findInBackground((posts, e) -> {
+                    // check for errors
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
                     }
+
+                    // for debugging purposes let's print every post description to logcat
+                    for (Post post : posts) {
+                        Log.i(TAG, "Post: by username: " + post.getUser().getUsername());
+                    }
+
+                    // save received posts to list and notify adapter of new data
+                    allPosts.addAll(posts);
+                    adapter.notifyDataSetChanged();
                 });
     }
 

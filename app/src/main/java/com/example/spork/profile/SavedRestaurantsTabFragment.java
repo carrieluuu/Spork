@@ -18,8 +18,6 @@ import java.util.List;
 
 public class SavedRestaurantsTabFragment extends Fragment {
 
-    private static final String TAG = "ProfileFeedTabFragment";
-
     private SearchAdapter adapter;
     private List<Restaurant> savedRestaurants;
     private RecyclerView rvSaved;
@@ -38,7 +36,7 @@ public class SavedRestaurantsTabFragment extends Fragment {
         savedRestaurants = new ArrayList<>();
 
         if (savedRestaurantIds != null && savedRestaurantIds.size() > 0) {
-            Object searchByIdData[] = new Object[5];
+            Object[] searchByIdData = new Object[5];
             searchByIdData[0] = savedRestaurants;
             searchByIdData[1] = adapter;
             searchByIdData[2] = rvSaved;

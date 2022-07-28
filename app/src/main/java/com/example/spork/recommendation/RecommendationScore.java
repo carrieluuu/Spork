@@ -1,18 +1,9 @@
 package com.example.spork.recommendation;
 
 import com.example.spork.Restaurant;
-
-import com.example.spork.onboarding.OnboardingFragment1;
-import com.example.spork.onboarding.OnboardingFragment2;
-import com.example.spork.onboarding.OnboardingFragment3;
-import com.example.spork.onboarding.OnboardingFragment4;
-
-import org.json.JSONException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
-
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class RecommendationScore {
@@ -48,12 +39,7 @@ public class RecommendationScore {
     }
 
     public List<Restaurant> sortList(List<Restaurant> restaurantList) {
-        Collections.sort(restaurantList, new Comparator<Restaurant>() {
-            @Override
-            public int compare(Restaurant r1, Restaurant r2) {
-                return Double.compare(r2.getScore(), r1.getScore());
-            }
-        });
+        Collections.sort(restaurantList, (r1, r2) -> Double.compare(r2.getScore(), r1.getScore()));
 
         return restaurantList;
 

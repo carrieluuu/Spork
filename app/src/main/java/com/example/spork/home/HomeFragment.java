@@ -11,11 +11,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.os.Looper;
 import android.provider.Settings;
@@ -23,16 +20,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.spork.BuildConfig;
 import com.example.spork.FileUtils;
 import com.example.spork.R;
-import com.example.spork.Restaurant;
 import com.example.spork.restaurant.FetchYelpData;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -45,19 +36,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 /**
  * Home Fragment class to display map with markers connecting the user to the recommended restaurant pages.
@@ -124,82 +108,57 @@ public class HomeFragment extends Fragment {
 
         currentUser = ParseUser.getCurrentUser();
 
-        chipOpenNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (chipOpenNow.isChecked())
-                    openNow = true;
-                else
-                    openNow = false;
-            }
+        chipOpenNow.setOnClickListener(v -> {
+            openNow = chipOpenNow.isChecked();
         });
 
-        chipPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (chipPrice.isChecked())
-                    priceWeight = 0.25;
-                else
-                    priceWeight = 0;
-            }
+        chipPrice.setOnClickListener(v -> {
+            if (chipPrice.isChecked())
+                priceWeight = 0.25;
+            else
+                priceWeight = 0;
+        });
+
+        chipTopRated.setOnClickListener(v -> {
+            if (chipTopRated.isChecked())
+                ratingWeight = 0.25;
+            else
+                ratingWeight = 0;
 
         });
 
-        chipTopRated.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (chipTopRated.isChecked())
-                    ratingWeight = 0.25;
-                else
-                    ratingWeight = 0;
+        chipPopular.setOnClickListener(v -> {
+            if (chipPopular.isChecked())
+                popularityWeight = 0.25;
+            else
+                popularityWeight = 0;
 
-            }
         });
 
-        chipPopular.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (chipPopular.isChecked())
-                    popularityWeight = 0.25;
-                else
-                    popularityWeight = 0;
-
-            }
+        chipDistance.setOnClickListener(v -> {
+            if (chipDistance.isChecked())
+                proximityWeight = 0.25;
+            else
+                proximityWeight = 0;
         });
 
-        chipDistance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (chipDistance.isChecked())
-                    proximityWeight = 0.25;
-                else
-                    proximityWeight = 0;
-            }
+        fabZoomIn.setOnClickListener(v -> {
+            radius -= 1000;
+            zoomIn = true;
+            zoomOut = false;
+            getCurrentLocation();
         });
 
-        fabZoomIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                radius -= 1000;
-                zoomIn = true;
-                zoomOut = false;
-                getCurrentLocation();
+        fabZoomOut.setOnClickListener(v -> {
+            if (radius >= MAX_RADIUS) {
+                radius = MAX_RADIUS;
+                Toast.makeText(getContext(), "Maximum zoom out reached", Toast.LENGTH_LONG).show();
+            } else {
+                radius += 2000;
+                zoomIn = false;
+                zoomOut = true;
             }
-        });
-
-        fabZoomOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (radius >= MAX_RADIUS) {
-                    radius = MAX_RADIUS;
-                    Toast.makeText(getContext(), "Maximum zoom out reached", Toast.LENGTH_LONG).show();
-                } else {
-                    radius += 2000;
-                    zoomIn = false;
-                    zoomOut = true;
-                }
-                getCurrentLocation();
-            }
+            getCurrentLocation();
         });
 
         currentUser.put("priceWeight", priceWeight);
@@ -254,7 +213,7 @@ public class HomeFragment extends Fragment {
             Log.i(TAG, url);
 
             // fetch data from json to add nearby restaurants onto the map
-            Object dataFetchPlaces[] = new Object[3];
+            Object[] dataFetchPlaces = new Object[3];
             dataFetchPlaces[0] = mMap;
             dataFetchPlaces[1] = url;
             dataFetchPlaces[2] = loadingCircle;
@@ -273,25 +232,21 @@ public class HomeFragment extends Fragment {
 
             mMap.getUiSettings().setMapToolbarEnabled(false);
 
-            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
+            mMap.setOnMarkerClickListener(marker -> {
 
-                    // send data to business search data [connect places api to yelp api]
-                    String businessSearchUrl = FileUtils.buildBusinessSearchUrl(marker);
+                // send data to business search data [connect places api to yelp api]
+                String businessSearchUrl = FileUtils.buildBusinessSearchUrl(marker);
 
-                    Log.i(TAG, "Business search url: "+ businessSearchUrl);
+                Log.i(TAG, "Business search url: "+ businessSearchUrl);
 
-                    Restaurant restaurant = new Restaurant();
-                    Object yelpData[] = new Object[2];
-                    yelpData[0] = businessSearchUrl;
-                    yelpData[1] = null;
+                Object[] yelpData = new Object[2];
+                yelpData[0] = businessSearchUrl;
+                yelpData[1] = null;
 
-                    FetchYelpData fetchYelpData  = new FetchYelpData(getContext());
-                    fetchYelpData.execute(yelpData);
+                FetchYelpData fetchYelpData  = new FetchYelpData(getContext());
+                fetchYelpData.execute(yelpData);
 
-                    return false;
-                }
+                return false;
             });
 
         }
@@ -339,87 +294,81 @@ public class HomeFragment extends Fragment {
             // When location service is enabled
             // Get last location
             client.getLastLocation().addOnCompleteListener(
-                    new OnCompleteListener<Location>() {
-                        @Override
-                        public void onComplete(
-                                @NonNull Task<Location> task)
-                        {
+                    task -> {
 
-                            // Initialize location
-                            Location location
-                                    = task.getResult();
-                            // Check condition
-                            if (location != null) {
-                                // When location result is not
-                                // null set latitude
-                                currentLat = location.getLatitude();
+                        // Initialize location
+                        Location location
+                                = task.getResult();
+                        // Check condition
+                        if (location != null) {
+                            // When location result is not
+                            // null set latitude
+                            currentLat = location.getLatitude();
 
-                                // set longitude
-                                currentLng = location.getLongitude();
+                            // set longitude
+                            currentLng = location.getLongitude();
 
-                            }
-                            else {
-                                // When location result is null
-                                // initialize location request
-                                LocationRequest locationRequest
-                                        = new LocationRequest()
-                                        .setPriority(
-                                                LocationRequest
-                                                        .PRIORITY_HIGH_ACCURACY)
-                                        .setInterval(10000)
-                                        .setFastestInterval(
-                                                1000)
-                                        .setNumUpdates(1);
+                        }
+                        else {
+                            // When location result is null
+                            // initialize location request
+                            LocationRequest locationRequest
+                                    = new LocationRequest()
+                                    .setPriority(
+                                            LocationRequest
+                                                    .PRIORITY_HIGH_ACCURACY)
+                                    .setInterval(10000)
+                                    .setFastestInterval(
+                                            1000)
+                                    .setNumUpdates(1);
 
-                                // Initialize location call back
-                                LocationCallback
-                                        locationCallback
-                                        = new LocationCallback() {
-                                    @Override
-                                    public void
-                                    onLocationResult(
-                                            LocationResult
-                                                    locationResult)
-                                    {
-                                        // Initialize
-                                        // location
-                                        Location location1
-                                                = locationResult
-                                                .getLastLocation();
-                                        // Set latitude
-                                        currentLat = location1.getLatitude();
+                            // Initialize location call back
+                            LocationCallback
+                                    locationCallback
+                                    = new LocationCallback() {
+                                @Override
+                                public void
+                                onLocationResult(
+                                        LocationResult
+                                                locationResult)
+                                {
+                                    // Initialize
+                                    // location
+                                    Location location1
+                                            = locationResult
+                                            .getLastLocation();
+                                    // Set latitude
+                                    currentLat = location1.getLatitude();
 
-                                        // Set longitude
-                                        currentLng = location1.getLongitude();
+                                    // Set longitude
+                                    currentLng = location1.getLongitude();
 
-                                    }
+                                }
 
 
-                                };
+                            };
 
-                                // Request location updates
-                                client.requestLocationUpdates(
-                                        locationRequest,
-                                        locationCallback,
-                                        Looper.myLooper());
-                            }
+                            // Request location updates
+                            client.requestLocationUpdates(
+                                    locationRequest,
+                                    locationCallback,
+                                    Looper.myLooper());
+                        }
 
-                            ParseGeoPoint currentLocation = new ParseGeoPoint(currentLat, currentLng);
-                            currentUser.put("currentLocation", currentLocation);
+                        ParseGeoPoint currentLocation = new ParseGeoPoint(currentLat, currentLng);
+                        currentUser.put("currentLocation", currentLocation);
 
-                            if (currentLat == 0.0 || currentLng == 0.0) {
-                                currentLat = 37.484553142102676;
-                                currentLng = -122.14773532902916;
-                            }
+                        if (currentLat == 0.0 || currentLng == 0.0) {
+                            currentLat = 37.484553142102676;
+                            currentLng = -122.14773532902916;
+                        }
 
-                            LatLng currentLatLng = new LatLng(currentLat, currentLng);
-                            Log.i(TAG, "currentLat: " + currentLat + " currentLng: " + currentLng);
+                        Log.i(TAG, "currentLat: " + currentLat + " currentLng: " + currentLng);
 
-                            SupportMapFragment mapFragment =
-                                    (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-                            if (mapFragment != null) {
-                                mapFragment.getMapAsync(callback);
-                            }
+                        SupportMapFragment mapFragment =
+                                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+                        if (mapFragment != null) {
+                            mapFragment.getMapAsync(callback);
                         }
                     });
 

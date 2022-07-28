@@ -112,12 +112,7 @@ public class PreferencesActivity extends AppCompatActivity {
         });
 
 
-        btnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goMainActivity();
-            }
-        });
+        btnDone.setOnClickListener(v -> goMainActivity());
 
     }
 
@@ -133,16 +128,18 @@ public class PreferencesActivity extends AppCompatActivity {
 
     private double getWeight(String selected) {
 
-        if (selected.equals("Very important"))
-            return VERY_IMPORTANT;
-        else if (selected.equals("Important"))
-            return IMPORTANT;
-        else if (selected.equals("Neutral"))
-            return NEUTRAL;
-        else if (selected.equals("Unimportant"))
-            return UNIMPORTANT;
-        else if (selected.equals("Very unimportant"))
-            return VERY_UNIMPORTANT;
+        switch (selected) {
+            case "Very important":
+                return VERY_IMPORTANT;
+            case "Important":
+                return IMPORTANT;
+            case "Neutral":
+                return NEUTRAL;
+            case "Unimportant":
+                return UNIMPORTANT;
+            case "Very unimportant":
+                return VERY_UNIMPORTANT;
+        }
         return 0.0;
     }
 

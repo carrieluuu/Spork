@@ -11,7 +11,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.parse.Parse;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -26,7 +25,6 @@ public class FetchPlacesData extends AsyncTask <Object, String, String> {
 
     private static final String TAG = "FetchPlacesData";
 
-    private String googleNearbyRestaurantsData;
     private GoogleMap googleMap;
     private String url;
     private List<Restaurant> restaurantList;

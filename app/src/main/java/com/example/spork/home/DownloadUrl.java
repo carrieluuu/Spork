@@ -2,8 +2,6 @@ package com.example.spork.home;
 
 import android.util.Log;
 
-import com.example.spork.BuildConfig;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

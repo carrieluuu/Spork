@@ -14,7 +14,6 @@ import com.example.spork.R;
 import com.example.spork.feed.Post;
 import com.example.spork.feed.PostsAdapter;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -61,20 +60,17 @@ public class ProfileFeedTabFragment extends Fragment {
         query.include(Post.KEY_USER)
                 .whereEqualTo("user", ParseUser.getCurrentUser())
                 .addDescendingOrder("createdAt")
-                .findInBackground(new FindCallback<Post>() {
-                    @Override
-                    public void done(List<Post> posts, ParseException e) {
-                        // check for errors
-                        if (e != null) {
-                            Log.e(TAG, "Issue with getting posts", e);
-                            return;
-                        }
-
-                        // save received posts to list and notify adapter of new data
-                        allPosts.addAll(posts);
-                        adapter.notifyDataSetChanged();
-                        loadingCircle.setVisibility(View.GONE);
+                .findInBackground((posts, e) -> {
+                    // check for errors
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
                     }
+
+                    // save received posts to list and notify adapter of new data
+                    allPosts.addAll(posts);
+                    adapter.notifyDataSetChanged();
+                    loadingCircle.setVisibility(View.GONE);
                 });
     }
 

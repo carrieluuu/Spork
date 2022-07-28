@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.spork.MainActivity;
 import com.example.spork.R;
 import com.parse.ParseUser;
 
@@ -88,17 +87,14 @@ public class RegistrationTabFragment extends Fragment {
     }
 
     private void registerButton() {
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG,"onClick register button");
-                String fullName = etName.getText().toString();
-                String username = etUsername.getText().toString();
-                String email = etEmail.getText().toString();
-                String password = etPassword.getText().toString();
+        btnRegister.setOnClickListener(v -> {
+            Log.i(TAG,"onClick register button");
+            String fullName = etName.getText().toString();
+            String username = etUsername.getText().toString();
+            String email = etEmail.getText().toString();
+            String password = etPassword.getText().toString();
 
-                createUser(fullName, username, email, password);
-            }
+            createUser(fullName, username, email, password);
         });
     }
 
@@ -127,7 +123,6 @@ public class RegistrationTabFragment extends Fragment {
 
 
     }
-
 
     private void goPreferencesActivity() {
         Intent i = new Intent(getContext(), PreferencesActivity.class);

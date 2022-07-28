@@ -6,9 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.spork.login.LoginTabFragment;
-import com.example.spork.login.RegistrationTabFragment;
-
 import java.lang.ref.WeakReference;
 
 public class ProfileAdapter extends FragmentPagerAdapter {
@@ -18,7 +15,7 @@ public class ProfileAdapter extends FragmentPagerAdapter {
 
     public ProfileAdapter(FragmentManager fm, Context context, int totalTabs) {
         super(fm);
-        this.context = new WeakReference<Context>(context);
+        this.context = new WeakReference<>(context);
         this.totalTabs = totalTabs;
     }
 
@@ -31,8 +28,7 @@ public class ProfileAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position) {
             case 0:
-                ProfileFeedTabFragment profileFeedTabFragment = new ProfileFeedTabFragment();
-                return profileFeedTabFragment;
+                return new ProfileFeedTabFragment();
 
             case 1:
                 SavedRestaurantsTabFragment savedRestaurantsTabFragment = new SavedRestaurantsTabFragment();

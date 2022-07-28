@@ -5,14 +5,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import android.text.Html;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,11 +24,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.spork.R;
 import com.example.spork.Restaurant;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.parse.livequery.ParseLiveQueryClient;
 import com.parse.livequery.SubscriptionHandling;
 
@@ -105,29 +100,21 @@ public class RestaurantActivity extends AppCompatActivity {
 
         ParseUser currentUser = ParseUser.getCurrentUser();
 
-        btnBookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // if restaurant is already saved in bookmarks -> clicking the button will remove the restaurant from saved
-                if (currentUser.get("savedRestaurants") != null && currentUser.get("savedRestaurants").toString().contains(restaurant.getYelpId())) {
-                    btnBookmark.setImageResource(R.drawable.ic_bookmark_outline);
-                    currentUser.removeAll("savedRestaurants", Arrays.asList(restaurant.getYelpId()));
-                    currentUser.saveInBackground();
-                } else {
-                    btnBookmark.setImageResource(R.drawable.ic_bookmark_filled);
-                    currentUser.add("savedRestaurants", restaurant.getYelpId());
-                    currentUser.saveInBackground();
-                }
-
+        btnBookmark.setOnClickListener(v -> {
+            // if restaurant is already saved in bookmarks -> clicking the button will remove the restaurant from saved
+            if (currentUser.get("savedRestaurants") != null && currentUser.get("savedRestaurants").toString().contains(restaurant.getYelpId())) {
+                btnBookmark.setImageResource(R.drawable.ic_bookmark_outline);
+                currentUser.removeAll("savedRestaurants", Arrays.asList(restaurant.getYelpId()));
+                currentUser.saveInBackground();
+            } else {
+                btnBookmark.setImageResource(R.drawable.ic_bookmark_filled);
+                currentUser.add("savedRestaurants", restaurant.getYelpId());
+                currentUser.saveInBackground();
             }
+
         });
 
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        btnClose.setOnClickListener(v -> finish());
 
         // Live User Reviews
         rvReviews = findViewById(R.id.rvReviews);
@@ -161,87 +148,64 @@ public class RestaurantActivity extends AppCompatActivity {
 
         SubscriptionHandling<Review> subscriptionHandling = parseLiveQueryClient.subscribe(queryReview);
 
-        subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    adapter.notifyDataSetChanged();
-                    rvReviews.scrollToPosition(0);
-                }
-            });
-        });
+        subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> runOnUiThread(() -> {
+            adapter.notifyDataSetChanged();
+            rvReviews.scrollToPosition(0);
+        }));
 
         queryReview.include(Review.KEY_USER)
                 .whereEqualTo("restaurantId", restaurant.getYelpId())
                 .addDescendingOrder("createdAt")
                 .whereGreaterThanOrEqualTo("createdAt", DateUtils.truncate(new Date(), Calendar.DATE))
-                .findInBackground(new FindCallback<Review>() {
-                    @Override
-                    public void done(List<Review> reviews, ParseException e) {
-                        // check for errors
-                        if (e != null) {
-                            Log.e(TAG, "Issue with getting posts", e);
-                            return;
-                        }
-
-                        // for debugging purposes let's print every review username to logcat
-                        for (Review review : reviews) {
-                            Log.i(TAG, "Review by username: " + review.getUser().getUsername() + review.getCreatedAt());
-                        }
-
-                        // save received posts to list and notify adapter of new data
-                        allReviews.addAll(reviews);
-                        adapter.notifyDataSetChanged();
+                .findInBackground((reviews, e) -> {
+                    // check for errors
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
                     }
+
+                    // for debugging purposes let's print every review username to logcat
+                    for (Review review : reviews) {
+                        Log.i(TAG, "Review by username: " + review.getUser().getUsername() + review.getCreatedAt());
+                    }
+
+                    // save received posts to list and notify adapter of new data
+                    allReviews.addAll(reviews);
+                    adapter.notifyDataSetChanged();
                 });
     }
 
     private void addReview() {
         btnAddReview = findViewById(R.id.btnAddReview);
-        btnAddReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantActivity.this);
-                builder.setTitle("What do you think of " + restaurant.getName() + "?");
+        btnAddReview.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantActivity.this);
+            builder.setTitle("What do you think of " + restaurant.getName() + "?");
 
-                String[] ratings =  {"Loved it" + ("\ud83d\ude0d"), "Ok " + ("\ud83d\ude2c") , "Didn't like it " + ("\ud83d\ude14")};
-                builder.setSingleChoiceItems(ratings, -1, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),
-                                "Selected rating = "+ ratings[which], Toast.LENGTH_SHORT).show();
-                        restaurant.setPopularity(restaurant.getPopularity() + (double)((which + 3)/3) * 0.5);
-                    }
-                });
+            String[] ratings =  {"Loved it" + ("\ud83d\ude0d"), "Ok " + ("\ud83d\ude2c") , "Didn't like it " + ("\ud83d\ude14")};
+            builder.setSingleChoiceItems(ratings, -1, (dialog, which) -> {
+                restaurant.setPopularity(restaurant.getPopularity() + (double)((which + 3)/3) * 0.5);
+            });
 
-                // Set up the input
-                final EditText etReview = new EditText(RestaurantActivity.this);
-                etReview.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(etReview);
+            // Set up the input
+            final EditText etReview = new EditText(RestaurantActivity.this);
+            etReview.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(etReview);
 
-                // Set up the confirm and cancel buttons
-                builder.setPositiveButton("Post", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String review = etReview.getText().toString();
-                        if (review.isEmpty()) {
-                            Toast.makeText(RestaurantActivity.this, "Description cannot be empty", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        ParseUser currentUser = ParseUser.getCurrentUser();
-                        savePost(review, currentUser);
+            // Set up the confirm and cancel buttons
+            builder.setPositiveButton("Post", (dialog, which) -> {
+                String review = etReview.getText().toString();
+                if (review.isEmpty()) {
+                    Toast.makeText(RestaurantActivity.this, "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                savePost(review, currentUser);
 
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+            });
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
-                builder.show();
+            builder.show();
 
-            }
         });
     }
 
@@ -250,15 +214,12 @@ public class RestaurantActivity extends AppCompatActivity {
         review.setReview(description);
         review.setUser(currentUser);
         review.setRestaurantId(restaurant.getYelpId());
-        review.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(RestaurantActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
-                }
-                Log.i(TAG, "Post save was successful");
+        review.saveInBackground(e -> {
+            if (e != null){
+                Log.e(TAG, "Error while saving", e);
+                Toast.makeText(RestaurantActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
             }
+            Log.i(TAG, "Post save was successful");
         });
         allReviews.add(0, review);
         adapter.notifyItemInserted(0);

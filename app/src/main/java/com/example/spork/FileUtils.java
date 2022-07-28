@@ -7,7 +7,7 @@ public class FileUtils {
     public static String buildPlacesUrl(double currentLat, double currentLng, int radius, boolean openNow) {
         StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json");
         sb.append("?fields=name%2Cgeometry/location");
-        sb.append("&location=" + currentLat + "%2C" + currentLng);
+        sb.append("&location=").append(currentLat).append("%2C").append(currentLng);
         sb.append("&radius=" + radius);
         sb.append("&type=restaurant");
         if (openNow)

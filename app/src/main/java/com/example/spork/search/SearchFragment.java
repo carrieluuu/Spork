@@ -30,8 +30,6 @@ import java.util.List;
 
 public class SearchFragment extends Fragment {
 
-    private static final String TAG = "SearchFragment";
-
     protected SearchAdapter adapter;
     protected List<Restaurant> featuredRestaurants;
     private ParseUser currentUser;
@@ -67,7 +65,7 @@ public class SearchFragment extends Fragment {
         String featuredUrl = FileUtils.buildFeaturedUrl(currentUser);
 
         featuredRestaurants = new ArrayList<>();
-        Object businessSearchData[] = new Object[5];
+        Object[] businessSearchData = new Object[5];
         businessSearchData[0] = featuredUrl;
         businessSearchData[1] = featuredRestaurants;
         businessSearchData[2] = adapter;
